@@ -16,7 +16,7 @@
     {
       "target": "objectives.html",
       "source": "objectives.md",
-      "label": "Objective",
+      "label": "Objectives",
       "unit-type": "task",
       "content-type": "text"
     },
