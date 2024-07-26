@@ -1,17 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-	<!-- Add CSS at the head of HTML file -->
-    <link rel="stylesheet" href="./css/main.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pattern Recognition: Feature Extraction</title>
+	<link rel="stylesheet" href="css/main.css">
 </head>
+
 <body>
-		<!-- Your code goes here-->
+	<div class="container">
+		<h1>Pattern Recognition: Experiment 1 - Feature Extraction</h1>
+		<div class="top-section">
+			<div class="graph-container light-grey-1">
+				<div id="plot"></div>
+			</div>
+			<div class="controls-container">
+				<div class="controls-tab light-grey-2">
+					<div class="controls-textbox">
+						Dataset
+					</div>
+					<div class="dropdown">
+						<button class="dropdown-button">
+							Select an option
+							<span class="arrow">&#9662;</span>
+						</button>
+						<div class="dropdown-content">
+							<a href="#">Option 1</a>
+							<a href="#">Option 2</a>
+							<a href="#">Option 3</a>
+						</div>
+					</div>
 
-	<p><li>This simulation has some <a href="../../../Introduction.html" target="PARENT">software dependencies</a>. We highly recommend you to use our customized <a href="https://vlead.vlabs.ac.in/development/#virtual-box" target="blank">VirtualBox</a> for the smooth running of these simulations.</li></p>
-	<p><li>Click <a href="Exp1.tar.gz">here</a> to open the Experiment for Linux systems</li></p>
-	<p><li>Click <a href="Exp1.zip">here</a> to open the Experiment for Windows</li></p>
-
-	<!-- Add JS at the bottom of HTML file --> 
-        <script src="./js/main.js"></script>
+				</div>
+				<div class="controls-tab light-grey-1">
+					Feature1
+				</div>
+				<div class="controls-tab light-grey-2">
+					Feature2
+				</div>
+				<div class="controls-tab light-grey-1">
+					Plot, Test Features
+				</div>
+				<div class="controls-tab light-grey-2">
+					Target Accuracy
+				</div>
+				<div class="controls-tab light-grey-1">
+					Current Accuracy
+				</div>
+				<div class="controls-tab light-grey-2">
+					Maximum Accuracy
+				</div>
+			</div>
+		</div>
+		<div class="feature-chart-container"></div>
+	</div>
+	<script src="js/main.js"></script>
 </body>
+
 </html>

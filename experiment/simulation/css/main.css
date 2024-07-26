@@ -1,1 +1,129 @@
-/* You CSS goes in here */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.light-grey-1 {
+    background-color: #f9f9f9;
+}
+
+.light-grey-2 {
+    background-color: #f2f2f2;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+h1 {
+    text-align: center;
+}
+
+.top-section {
+    display: flex;
+    height: 55%;
+    width: 90%;
+    align-self: center;
+}
+
+.graph-container {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controls-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controls-tab {
+    width: 100%;
+    padding: 10px 25px;
+    height: 12%;
+    display: flex;
+    align-items: center;
+}
+
+.controls-textbox {
+    width: 25%;
+}
+
+.feature-chart-container {
+    height: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Dropdown button */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    /* Adds space between Dataset text and dropdown button */
+}
+
+/* Dropdown button */
+.dropdown-button {
+    background-color: white;
+    border-color: #cccccc;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+}
+
+/* Arrow */
+.arrow {
+    margin-left: 10px;
+}
+
+/* Dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+/* Dropdown items */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown items on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show dropdown content on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Ensure the controls-tab uses flexbox to align items */
+.controls-tab {
+    display: flex;
+    align-items: center;
+    /* Ensures space between text and dropdown */
+    width: 100%;
+    padding: 5px 10px;
+    height: 12%;
+}
