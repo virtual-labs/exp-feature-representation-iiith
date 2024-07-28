@@ -1,15 +1,3 @@
-// Function to initialize the plot (Placeholder for Plotly or other library)
-function initializePlot() {
-    // Example using Plotly.js, make sure to include Plotly library in your HTML
-    const plotDiv = document.getElementById('plot');
-    const trace1 = {
-        x: [1, 2, 3, 4],
-        y: [10, 15, 13, 17],
-        type: 'scatter'
-    };
-    const data = [trace1];
-    Plotly.newPlot(plotDiv, data);
-}
 
 // Function to handle dataset loading
 function loadDataset() {
@@ -45,11 +33,32 @@ function populateFeatureDropdowns() {
     });
 }
 
-// Event listeners
-document.getElementById('load-button').addEventListener('click', loadDataset);
 
-// Initialize plot and populate dropdowns on page load
 window.onload = function () {
     initializePlot();
     populateFeatureDropdowns();
 };
+
+// Hides all other dropdown-content other than the one with dropdownId
+function toggleDropdown(dropdownId) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var i = 0; i < dropdowns.length; i++) {
+        if (dropdowns[i].id !== dropdownId) {
+            dropdowns[i].classList.remove("show");
+        }
+    }
+    var currentDropdown = document.getElementById(dropdownId);
+    currentDropdown.classList.toggle("show");
+}
+
+window.onclick = function (event) {
+    // If click is outside any dropdown-content, any dropdown-content showing should be hidden
+    if (!event.target.matches('.dropdown-button') && !event.target.matches('.dropdown-content')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            if (dropdowns[i].classList.contains('show')) {
+                dropdowns[i].classList.remove('show');
+            }
+        }
+    }
+}
