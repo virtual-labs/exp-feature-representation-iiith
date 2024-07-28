@@ -6,6 +6,10 @@ html {
     box-sizing: border-box;
 }
 
+* {
+    font-family: Arial, sans-serif;
+}
+
 .light-grey-1 {
     background-color: #f9f9f9;
 }
@@ -45,18 +49,8 @@ h1 {
     align-items: center;
 }
 
-.controls-tab {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 10px 25px;
-    height: 12%;
-    display: flex;
-    align-items: center;
-}
-
 .controls-textbox {
-    width: 25%;
+    width: fit-content;
 }
 
 .feature-chart-container {
@@ -76,7 +70,7 @@ h1 {
 .dropdown-button {
     background-color: white;
     border-color: #cccccc;
-    padding: 5px 20px;
+    padding: 5px 10px;
     font-size: 16px;
     cursor: pointer;
     display: flex;
@@ -107,15 +101,42 @@ h1 {
     display: block;
 }
 
-/* Ensure the controls-tab uses flexbox to align items */
 .controls-tab {
     display: flex;
     align-items: center;
     width: 100%;
     padding: 5px 10px;
     height: 12%;
+    justify-content: space-between;
 }
 
 .show {
     display: block;
+}
+
+.blue-button {
+    background-color: #e6f2ff;
+    border: 1px solid #b0c4de;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    background-image: linear-gradient(to bottom, #f5f9ff, #e6f2ff);
+}
+
+.blue-button-a {
+    width: 45%;
+    margin: 0px 3px;
+}
+
+.blue-button:hover {
+    background-color: #d0e7ff;
+    border-color: #a0b8cc;
+}
+
+.blue-button:active {
+    background-color: #c0d9ff;
+    border-color: #90aacb;
 }
