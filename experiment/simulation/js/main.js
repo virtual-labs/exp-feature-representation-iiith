@@ -1,3 +1,20 @@
+let dataset = [];
+let features = [];
+
+// Key value pair (dataset-name that links to [digit1, digit2])
+let selectedDataset = {};
+
+let selectedFeature1 = '';
+let selectedFeature2 = '';
+
+// Pixel Intensity and Aspect Ratio
+selectedDataset["L1"] = [0, 1]
+// Convexity and Euler's Number
+selectedDataset["L2"] = [3, 8]
+// Solidity and Euler's Number
+selectedDataset["L3"] = [5, 6]
+// Solidity and Convexity
+selectedDataset["L4"] = [1, 3]
 
 // Function to parse CSV data
 function parseCSV(data) {
@@ -17,16 +34,16 @@ function parseCSV(data) {
     return result;
 }
 
+// Function to fetch and process CSV data
 async function fetchCSVData() {
     try {
-        const response = await fetch('../../images/features.csv'); // Ensure this path is correct
+        const response = await fetch('../images/features.csv'); // Path relative to index.html
         console.log("Fetching CSV from: ../images/features.csv");
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         const csvData = await response.text();
         console.log("CSV Data fetched successfully");
-        console.log(csvData); // Log the raw CSV data
         return parseCSV(csvData);
     } catch (error) {
         console.error('Error fetching CSV data:', error);
@@ -46,22 +63,25 @@ function populateDropdown(dropdownId, features) {
     });
 }
 
-let dataset = [];
-let features = [];
-let selectedFeature1 = '';
-let selectedFeature2 = '';
-
 function selectFeature(dropdownId, feature) {
-    const button = dropdownId === 'dropdown2' ? document.querySelector('.controls-tab.light-grey-1 .dropdown-button') : document.querySelector('.controls-tab.light-grey-2 .dropdown-button');
-    button.textContent = feature;
-
-    if (dropdownId === 'dropdown2') {
+    if (dropdownId === 'dropdown1') {
+        selectedDataset = feature;
+    } else if (dropdownId === 'dropdown2') {
         selectedFeature1 = feature;
-    } else {
+    } else if (dropdownId === 'dropdown3') {
         selectedFeature2 = feature;
     }
 
-    if (selectedFeature1 && selectedFeature2) {
+    // Update button text
+    if (dropdownId === 'dropdown1') {
+        document.getElementById('dataset-button').textContent = feature;
+    } else if (dropdownId === 'dropdown2') {
+        document.getElementById('feature1-button').textContent = feature;
+    } else if (dropdownId === 'dropdown3') {
+        document.getElementById('feature2-button').textContent = feature;
+    }
+
+    if (selectedDataset && selectedFeature1 && selectedFeature2) {
         updatePlot();
     }
 }
@@ -75,12 +95,16 @@ async function init() {
 
         selectedFeature1 = features[0];
         selectedFeature2 = features[1];
+        datasetOptions = ["L1", "L2", "L3", "L4"]
 
+        // Set default button texts
+        document.getElementById('dataset-button').textContent = datasetOptions[0];
+        document.getElementById('feature1-button').textContent = selectedFeature1;
+        document.getElementById('feature2-button').textContent = selectedFeature2;
+
+        populateDropdown('dropdown1', datasetOptions)
         populateDropdown('dropdown2', features);
         populateDropdown('dropdown3', features);
-
-        // Display the parsed CSV data in the 'plot' div for debugging
-        document.getElementById('plot').innerText = JSON.stringify(dataset, null, 2);
 
         console.log("Initialization completed, dataset:", dataset);
 
@@ -90,8 +114,12 @@ async function init() {
     }
 }
 
-
 function updatePlot() {
+    if (!selectedFeature1 || !selectedFeature2) {
+        console.error('Features not selected');
+        return;
+    }
+
     const xValues = dataset.map(d => parseFloat(d[selectedFeature1]));
     const yValues = dataset.map(d => parseFloat(d[selectedFeature2]));
 
@@ -158,4 +186,5 @@ window.onclick = function (event) {
     }
 }
 
-init();
+// Initialize the app
+document.addEventListener('DOMContentLoaded', init);

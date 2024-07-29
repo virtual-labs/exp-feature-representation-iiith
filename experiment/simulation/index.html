@@ -13,17 +13,14 @@
 		<h1>Pattern Recognition: Experiment 1 - Feature Extraction</h1>
 		<div class="top-section">
 			<div class="graph-container light-grey-1">
-				<div id="plot"></div>
+				<canvas id="plot"></canvas>
 			</div>
 			<div class="controls-container">
 				<div class="controls-tab light-grey-2">
-					<div class="controls-textbox">
-						Dataset
-					</div>
+					<div class="controls-textbox">Dataset</div>
 					<div class="dropdown width-half">
-						<button onclick="toggleDropdown('dropdown1')" class="dropdown-button">
-							L1
-							<span class="arrow">&#9662;</span>
+						<button id="dataset-button" onclick="toggleDropdown('dropdown1')" class="dropdown-button">
+							L1 <span class="arrow">&#9662;</span>
 						</button>
 						<div id="dropdown1" class="dropdown-content">
 							<a href="#">Option 1</a>
@@ -33,12 +30,9 @@
 					</div>
 				</div>
 				<div class="controls-tab light-grey-1">
-					<div class="controls-textbox">
-						Feature1
-					</div>
+					<div class="controls-textbox">Feature1</div>
 					<div class="dropdown width-half">
-						<button onclick="toggleDropdown('dropdown2')" class="dropdown-button">
-							Contrast Ratio
+						<button id="feature1-button" onclick="toggleDropdown('dropdown2')" class="dropdown-button">
 							<span class="arrow">&#9662;</span>
 						</button>
 						<div id="dropdown2" class="dropdown-content">
@@ -47,12 +41,9 @@
 					</div>
 				</div>
 				<div class="controls-tab light-grey-2">
-					<div class="controls-textbox">
-						Feature2
-					</div>
+					<div class="controls-textbox">Feature2</div>
 					<div class="dropdown width-half">
-						<button onclick="toggleDropdown('dropdown3')" class="dropdown-button">
-							Contrast Ratio
+						<button id="feature2-button" onclick="toggleDropdown('dropdown3')" class="dropdown-button">
 							<span class="arrow">&#9662;</span>
 						</button>
 						<div id="dropdown3" class="dropdown-content">
@@ -64,19 +55,14 @@
 					<button class="blue-button blue-button-a">Plot</button>
 					<button class="blue-button blue-button-a">Test Features</button>
 				</div>
-				<div class="controls-tab light-grey-2">
-					Target Accuracy
-				</div>
-				<div class="controls-tab light-grey-1">
-					Current Accuracy
-				</div>
-				<div class="controls-tab light-grey-2">
-					Maximum Accuracy
-				</div>
+				<div class="controls-tab light-grey-2">Target Accuracy</div>
+				<div class="controls-tab light-grey-1">Current Accuracy</div>
+				<div class="controls-tab light-grey-2">Maximum Accuracy</div>
 			</div>
 		</div>
 		<div class="feature-chart-container"></div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="js/main.js"></script>
 </body>
 
