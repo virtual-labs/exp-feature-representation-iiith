@@ -1,20 +1,18 @@
 let dataset = [];
 let features = [];
 
+let currentDataset = "L1";  // Default dataset
+
 // Key value pair (dataset-name that links to [digit1, digit2])
-let selectedDataset = {};
+const datasetMappings = {
+    "L1": [0, 1],   // Pixel Intensity and Aspect Ratio
+    "L2": [3, 8],   // Convexity and Euler's Number
+    "L3": [5, 6],   // Solidity and Euler's Number
+    "L4": [1, 3]    // Solidity and Convexity
+};
 
 let selectedFeature1 = '';
 let selectedFeature2 = '';
-
-// Pixel Intensity and Aspect Ratio
-selectedDataset["L1"] = [0, 1]
-// Convexity and Euler's Number
-selectedDataset["L2"] = [3, 8]
-// Solidity and Euler's Number
-selectedDataset["L3"] = [5, 6]
-// Solidity and Convexity
-selectedDataset["L4"] = [1, 3]
 
 // Function to parse CSV data
 function parseCSV(data) {
@@ -63,27 +61,25 @@ function populateDropdown(dropdownId, features) {
     });
 }
 
-function selectFeature(dropdownId, feature) {
+function selectFeature(dropdownId, item) {
     if (dropdownId === 'dropdown1') {
-        selectedDataset = feature;
+        currentDataset = item;
     } else if (dropdownId === 'dropdown2') {
-        selectedFeature1 = feature;
+        selectedFeature1 = item;
     } else if (dropdownId === 'dropdown3') {
-        selectedFeature2 = feature;
+        selectedFeature2 = item;
     }
 
     // Update button text
     if (dropdownId === 'dropdown1') {
-        document.getElementById('dataset-button').textContent = feature;
+        document.getElementById('dataset-button').textContent = item;
     } else if (dropdownId === 'dropdown2') {
-        document.getElementById('feature1-button').textContent = feature;
+        document.getElementById('feature1-button').textContent = item;
     } else if (dropdownId === 'dropdown3') {
-        document.getElementById('feature2-button').textContent = feature;
+        document.getElementById('feature2-button').textContent = item;
     }
 
-    if (selectedDataset && selectedFeature1 && selectedFeature2) {
-        updatePlot();
-    }
+    updatePlot();
 }
 
 async function init() {
@@ -93,9 +89,9 @@ async function init() {
     if (dataset && dataset.length > 0) {
         features = Object.keys(dataset[0]).slice(2); // Extract feature names excluding Image and Class
 
+        const datasetOptions = Object.keys(datasetMappings);
         selectedFeature1 = features[0];
         selectedFeature2 = features[1];
-        datasetOptions = ["L1", "L2", "L3", "L4"]
 
         // Set default button texts
         document.getElementById('dataset-button').textContent = datasetOptions[0];
@@ -120,15 +116,32 @@ function updatePlot() {
         return;
     }
 
-    const xValues = dataset.map(d => parseFloat(d[selectedFeature1]));
-    const yValues = dataset.map(d => parseFloat(d[selectedFeature2]));
+    const classFilter = datasetMappings[currentDataset];
+    const filteredDataset = dataset.filter(d => classFilter.includes(parseInt(d.Class)));
+
+    // Split the dataset into two based on the class
+    const class0Data = filteredDataset.filter(d => parseInt(d.Class) === classFilter[0]);
+    const class1Data = filteredDataset.filter(d => parseInt(d.Class) === classFilter[1]);
+
+    const xValuesClass0 = class0Data.map(d => parseFloat(d[selectedFeature1]));
+    const yValuesClass0 = class0Data.map(d => parseFloat(d[selectedFeature2]));
+
+    const xValuesClass1 = class1Data.map(d => parseFloat(d[selectedFeature1]));
+    const yValuesClass1 = class1Data.map(d => parseFloat(d[selectedFeature2]));
 
     const data = {
-        datasets: [{
-            label: 'Scatter Dataset',
-            data: xValues.map((x, i) => ({ x: x, y: yValues[i] })),
-            backgroundColor: 'rgba(75, 192, 192, 1)'
-        }]
+        datasets: [
+            {
+                label: 'Class ' + classFilter[0],
+                data: xValuesClass0.map((x, i) => ({ x: x, y: yValuesClass0[i] })),
+                backgroundColor: 'rgba(255, 0, 0, 1)' // Red for class 0
+            },
+            {
+                label: 'Class ' + classFilter[1],
+                data: xValuesClass1.map((x, i) => ({ x: x, y: yValuesClass1[i] })),
+                backgroundColor: 'rgba(0, 0, 255, 1)' // Blue for class 1
+            }
+        ]
     };
 
     const config = {
@@ -148,6 +161,14 @@ function updatePlot() {
                     title: {
                         display: true,
                         text: selectedFeature2
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        usePointStyle: true
                     }
                 }
             }
