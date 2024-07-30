@@ -116,6 +116,32 @@ function updatePlot() {
         return;
     }
 
+    // Calculate the ranges for x and y based on the entire dataset
+    const allXValues = dataset.map(d => parseFloat(d[selectedFeature1]));
+    const allYValues = dataset.map(d => parseFloat(d[selectedFeature2]));
+
+    // Filter out NaN values before calculating min and max
+    const validXValues = allXValues.filter(v => !isNaN(v));
+    const validYValues = allYValues.filter(v => !isNaN(v));
+
+    const xMin = Math.min(...validXValues);
+    const xMax = Math.max(...validXValues);
+    const yMin = Math.min(...validYValues);
+    const yMax = Math.max(...validYValues);
+
+    // Add padding to ensure dots are not cut off at the edges
+    const padding = 0.05; // 5% padding
+    const xRange = xMax - xMin;
+    const yRange = yMax - yMin;
+
+    // Determine the min and max values with padding, adjusted to the nearest increment
+    const increment = 0.05; // Example increment value
+
+    const xMinAdjusted = Math.floor((xMin - xRange * padding) / increment) * increment;
+    const xMaxAdjusted = Math.ceil((xMax + xRange * padding) / increment) * increment;
+    const yMinAdjusted = Math.floor((yMin - yRange * padding) / increment) * increment;
+    const yMaxAdjusted = Math.ceil((yMax + yRange * padding) / increment) * increment;
+
     const classFilter = datasetMappings[currentDataset];
     const filteredDataset = dataset.filter(d => classFilter.includes(parseInt(d.Class)));
 
@@ -155,13 +181,17 @@ function updatePlot() {
                     title: {
                         display: true,
                         text: selectedFeature1
-                    }
+                    },
+                    min: xMinAdjusted,
+                    max: xMaxAdjusted
                 },
                 y: {
                     title: {
                         display: true,
                         text: selectedFeature2
-                    }
+                    },
+                    min: yMinAdjusted,
+                    max: yMaxAdjusted
                 }
             },
             plugins: {
