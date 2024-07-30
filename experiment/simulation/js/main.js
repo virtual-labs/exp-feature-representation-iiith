@@ -61,6 +61,37 @@ function populateDropdown(dropdownId, features) {
     });
 }
 
+function populateTableHeaders(headers) {
+    const headerRow = document.getElementById('table-headers');
+    headerRow.innerHTML = ''; // Clear existing headers
+
+    headers.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
+    });
+}
+
+function populateTableRows(data) {
+    const tableBody = document.getElementById('data-table').querySelector('tbody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+        for (const key in row) {
+            const td = document.createElement('td');
+            let value = row[key];
+            if (!isNaN(value) && parseFloat(value) == value) {
+                // Round to three decimal places if necessary, but avoid trailing zeros
+                value = parseFloat(value).toFixed(3).replace(/\.?0+$/, '');
+            }
+            td.textContent = value;
+            tr.appendChild(td);
+        }
+        tableBody.appendChild(tr);
+    });
+}
+
 function selectFeature(dropdownId, item) {
     if (dropdownId === 'dropdown1') {
         currentDataset = item;
@@ -87,7 +118,8 @@ async function init() {
     dataset = await fetchCSVData();
     console.log("Fetched Dataset:", dataset); // Log the parsed dataset
     if (dataset && dataset.length > 0) {
-        features = Object.keys(dataset[0]).slice(2); // Extract feature names excluding Image and Class
+        const headers = Object.keys(dataset[0]); // Get all headers including Image, ImageID, Class, and features
+        features = headers.slice(3); // Extract feature names excluding Image, ImageID, and Class
 
         const datasetOptions = Object.keys(datasetMappings);
         selectedFeature1 = features[0];
@@ -103,6 +135,10 @@ async function init() {
         populateDropdown('dropdown3', features);
 
         console.log("Initialization completed, dataset:", dataset);
+
+        // Populate the table with data
+        populateTableHeaders(headers);
+        populateTableRows(dataset);
 
         updatePlot(); // Initial plot
     } else {

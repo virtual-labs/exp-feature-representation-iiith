@@ -64,8 +64,7 @@ h1 {
 
 .bottom-section {
     height: 45%;
-    display: flex;
-    background-color: #90aacb;
+    padding-top: 10px;
 }
 
 .dropdown {
