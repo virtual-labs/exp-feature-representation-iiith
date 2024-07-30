@@ -81,15 +81,33 @@ function populateTableRows(data) {
         for (const key in row) {
             const td = document.createElement('td');
             let value = row[key];
-            if (!isNaN(value) && parseFloat(value) == value) {
-                // Round to three decimal places if necessary, but avoid trailing zeros
-                value = parseFloat(value).toFixed(3).replace(/\.?0+$/, '');
+            if (key === 'Image') {
+                const img = document.createElement('img');
+                const className = row['Class'];
+                img.src = `../images/selected_images/${className}/${value}`;
+                img.alt = value;
+                td.appendChild(img);
+                img.className = 'img';
+            } else {
+                if (!isNaN(value) && parseFloat(value) == value) {
+                    // Round to three decimal places if necessary, but avoid trailing zeros
+                    value = parseFloat(value).toFixed(3).replace(/\.?0+$/, '');
+                }
+                td.textContent = value;
             }
-            td.textContent = value;
             tr.appendChild(td);
         }
         tableBody.appendChild(tr);
     });
+}
+
+function updateTable(){
+    const classFilter = datasetMappings[currentDataset];
+    const filteredDataset = dataset.filter(d => classFilter.includes(parseInt(d.Class)));
+    const headers = Object.keys(filteredDataset[0]);
+
+    populateTableHeaders(headers);
+    populateTableRows(filteredDataset);
 }
 
 function selectFeature(dropdownId, item) {
@@ -111,6 +129,7 @@ function selectFeature(dropdownId, item) {
     }
 
     updatePlot();
+    updateTable();
 }
 
 async function init() {
@@ -130,17 +149,14 @@ async function init() {
         document.getElementById('feature1-button').textContent = selectedFeature1;
         document.getElementById('feature2-button').textContent = selectedFeature2;
 
-        populateDropdown('dropdown1', datasetOptions)
+        populateDropdown('dropdown1', datasetOptions);
         populateDropdown('dropdown2', features);
         populateDropdown('dropdown3', features);
 
         console.log("Initialization completed, dataset:", dataset);
 
-        // Populate the table with data
-        populateTableHeaders(headers);
-        populateTableRows(dataset);
-
         updatePlot(); // Initial plot
+        updateTable(); // Initial Table
     } else {
         console.error('No data available in dataset');
     }
@@ -171,7 +187,7 @@ function updatePlot() {
     const yRange = yMax - yMin;
 
     // Determine the min and max values with padding, adjusted to the nearest increment
-    const increment = 0.05; // Example increment value
+    const increment = 0.05;
 
     const xMinAdjusted = Math.floor((xMin - xRange * padding) / increment) * increment;
     const xMaxAdjusted = Math.ceil((xMax + xRange * padding) / increment) * increment;
