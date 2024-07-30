@@ -211,13 +211,23 @@ function updatePlot() {
         datasets: [
             {
                 label: 'Class ' + classFilter[0],
-                data: xValuesClass0.map((x, i) => ({ x: x, y: yValuesClass0[i] })),
-                backgroundColor: 'rgba(255, 0, 0, 1)' // Red for class 0
+                data: xValuesClass0.map((x, i) => ({
+                    x: x,
+                    y: yValuesClass0[i],
+                    img: `../images/selected_images/${classFilter[0]}/${class0Data[i].Image}`
+                })),
+                backgroundColor: 'rgba(255, 0, 0, 1)', // Red for class 0
+                pointHoverRadius: 5 // Same radius on hover
             },
             {
                 label: 'Class ' + classFilter[1],
-                data: xValuesClass1.map((x, i) => ({ x: x, y: yValuesClass1[i] })),
-                backgroundColor: 'rgba(0, 0, 255, 1)' // Blue for class 1
+                data: xValuesClass1.map((x, i) => ({
+                    x: x,
+                    y: yValuesClass1[i],
+                    img: `../images/selected_images/${classFilter[1]}/${class1Data[i].Image}`
+                })),
+                backgroundColor: 'rgba(0, 0, 255, 1)', // Blue for class 1
+                pointHoverRadius: 4 // Same radius on hover
             }
         ]
     };
@@ -251,6 +261,25 @@ function updatePlot() {
                     display: true,
                     labels: {
                         usePointStyle: true
+                    }
+                },
+                tooltip: {
+                    usePointStyle: true,
+                    enabled: true,
+                    callbacks: {
+                        label: function (context) {
+                            const label = context.dataset.label + ': (' + context.raw.x + ', ' + context.raw.y + ')';
+                            return label;
+                        },
+                        labelPointStyle: (context) => {
+                            const imgSrc = context.raw.img;
+                            const image = new Image();
+                            image.src = imgSrc;
+                            console.log(context)
+                            return {
+                                pointStyle: image
+                            }
+                        }
                     }
                 }
             }
