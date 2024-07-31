@@ -11,6 +11,15 @@ const datasetMappings = {
     "L4": [1, 3]    // Solidity and Convexity
 };
 
+const featureDescriptions = {
+    'Pixel Intensity': 'Total number of pixels that are part of the digit. Greater pixel intensity means a more filled-in or bolder shape.',
+    'Aspect Ratio': 'Ratio of the width to the height of the digit. Greater aspect ratio means a wider shape.',
+    'Perimeter': 'Total length around the edge of the digit. Greater perimeter means a more complex or curved shape.',
+    'Solidity': 'Ratio of the area of the digit to the area of its convex hull. Greater solidity means a more compact and solid shape.',
+    'Convexity': 'How "outward" or rounded the digit shape is. Greater convexity means a more rounded and less indented shape.',
+    'Euler\'s Number': 'Topological property representing the number of objects in the digit image minus the number of holes. Greater Euler\'s number means fewer holes in the shape.'
+};
+
 let selectedFeature1 = '';
 let selectedFeature2 = '';
 
@@ -68,8 +77,56 @@ function populateTableHeaders(headers) {
     headers.forEach(header => {
         const th = document.createElement('th');
         th.textContent = header;
+        // Set the title attribute for the tooltip
+        if (featureDescriptions[header]) {
+            th.setAttribute('data-description', featureDescriptions[header]);
+            th.addEventListener('mouseover', showTooltip);
+            th.addEventListener('mouseout', hideTooltip);
+            th.addEventListener('mousemove', moveTooltip);
+        }
         headerRow.appendChild(th);
     });
+}
+
+function showTooltip(event) {
+    const tooltip = document.getElementById('tooltip');
+    tooltip.textContent = event.target.getAttribute('data-description');
+    tooltip.style.display = 'block';
+    moveTooltip(event);
+}
+
+function hideTooltip() {
+    const tooltip = document.getElementById('tooltip');
+    tooltip.style.display = 'none';
+}
+
+function moveTooltip(event) {
+    const tooltip = document.getElementById('tooltip');
+    const xOffset = 10; // Offset from the mouse pointer
+    const yOffset = 20; // Offset from the mouse pointer
+
+    // Calculate position
+    let left = event.pageX + xOffset;
+    let top = event.pageY + yOffset;
+
+    // Adjust if tooltip goes beyond right edge of viewport
+    if ((left + tooltip.offsetWidth) > window.innerWidth) {
+        left = event.pageX - xOffset - tooltip.offsetWidth;
+    }
+    // Adjust if tooltip goes beyond bottom edge of viewport
+    if ((top + tooltip.offsetHeight) > window.innerHeight) {
+        top = event.pageY - yOffset - tooltip.offsetHeight;
+    }
+    // Adjust if tooltip goes beyond left edge of viewport
+    if (left < 0) {
+        left = xOffset;
+    }
+    // Adjust if tooltip goes beyond top edge of viewport
+    if (top < 0) {
+        top = yOffset;
+    }
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
 }
 
 function populateTableRows(data) {
