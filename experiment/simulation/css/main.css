@@ -2,6 +2,7 @@ body,
 html {
     margin: 0;
     padding: 0;
+    overflow: auto;
     height: 100%;
     box-sizing: border-box;
 }
@@ -43,7 +44,7 @@ h1 {
 }
 
 .graph-container {
-    width: 60%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,7 +52,7 @@ h1 {
 }
 
 .controls-container {
-    width: 40%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,8 +64,7 @@ h1 {
 }
 
 .bottom-section {
-    height: 45%;
-    padding-top: 10px;
+    margin-top: 10px;
 }
 
 .img {
@@ -90,10 +90,6 @@ h1 {
     border-radius: 4px;
     justify-content: space-between;
     width: 100%;
-}
-
-.arrow {
-    margin-left: 10px;
 }
 
 .dropdown-content {
@@ -140,11 +136,8 @@ h1 {
     cursor: pointer;
     box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
     background-image: linear-gradient(to bottom, #f5f9ff, #e6f2ff);
-}
-
-.blue-button-a {
-    width: 45%;
-    margin: 0px 3px;
+    margin-left: auto;
+    width: 50%;
 }
 
 .blue-button:hover {

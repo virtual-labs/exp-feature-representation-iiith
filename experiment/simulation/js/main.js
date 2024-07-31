@@ -36,15 +36,15 @@ function parseCSV(data) {
 async function fetchCSVData() {
     try {
         const response = await fetch('../images/features.csv'); // Path relative to index.html
-        console.log("Fetching CSV from: ../images/features.csv");
+        // console.log("Fetching CSV from: ../images/features.csv");
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         const csvData = await response.text();
-        console.log("CSV Data fetched successfully");
+        // console.log("CSV Data fetched successfully");
         return parseCSV(csvData);
     } catch (error) {
-        console.error('Error fetching CSV data:', error);
+        // console.error('Error fetching CSV data:', error);
     }
 }
 
@@ -145,15 +145,15 @@ async function init() {
         selectedFeature2 = features[1];
 
         // Set default button texts
-        document.getElementById('dataset-button').textContent = datasetOptions[0];
-        document.getElementById('feature1-button').textContent = selectedFeature1;
-        document.getElementById('feature2-button').textContent = selectedFeature2;
+        document.getElementById('dataset-button').innerHTML = datasetOptions[0] + '<span class="arrow">&#9662;</span>';
+        document.getElementById('feature1-button').innerHTML = selectedFeature1 + '<span class="arrow">&#9662;</span>';
+        document.getElementById('feature2-button').innerHTML = selectedFeature2 + '<span class="arrow">&#9662;</span>';
 
         populateDropdown('dropdown1', datasetOptions);
         populateDropdown('dropdown2', features);
         populateDropdown('dropdown3', features);
 
-        console.log("Initialization completed, dataset:", dataset);
+        // console.log("Initialization completed, dataset:", dataset);
 
         updatePlot(); // Initial plot
         updateTable(); // Initial Table
@@ -217,7 +217,7 @@ function updatePlot() {
                     img: `../images/selected_images/${classFilter[0]}/${class0Data[i].Image}`
                 })),
                 backgroundColor: 'rgba(255, 0, 0, 1)', // Red for class 0
-                pointHoverRadius: 5 // Same radius on hover
+                pointHoverRadius: 6
             },
             {
                 label: 'Class ' + classFilter[1],
@@ -227,7 +227,7 @@ function updatePlot() {
                     img: `../images/selected_images/${classFilter[1]}/${class1Data[i].Image}`
                 })),
                 backgroundColor: 'rgba(0, 0, 255, 1)', // Blue for class 1
-                pointHoverRadius: 4 // Same radius on hover
+                pointHoverRadius: 6
             }
         ]
     };
@@ -259,6 +259,7 @@ function updatePlot() {
             plugins: {
                 legend: {
                     display: true,
+                    position: 'right',
                     labels: {
                         usePointStyle: true
                     }
@@ -266,6 +267,7 @@ function updatePlot() {
                 tooltip: {
                     usePointStyle: true,
                     enabled: true,
+                    mode: 'nearest', // Show the nearest point
                     callbacks: {
                         label: function (context) {
                             const label = context.dataset.label + ': (' + context.raw.x + ', ' + context.raw.y + ')';
@@ -275,10 +277,9 @@ function updatePlot() {
                             const imgSrc = context.raw.img;
                             const image = new Image();
                             image.src = imgSrc;
-                            console.log(context)
                             return {
                                 pointStyle: image
-                            }
+                            };
                         }
                     }
                 }

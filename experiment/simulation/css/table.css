@@ -1,16 +1,19 @@
+#header-table,
 #data-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
+    /* Ensures fixed layout for consistent column widths */
 }
 
-#data-table th,
+#header-table th,
 #data-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
 }
 
-#data-table th {
+#header-table th {
     background-color: #f2f2f2;
     color: black;
 }
@@ -21,4 +24,21 @@
 
 #data-table tr:hover {
     background-color: #ddd;
+}
+
+.table-container {
+    position: relative;
+}
+
+.table-header-container {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+}
+
+.table-body-container {
+    max-height: 350px;
+    /* Adjust as needed */
+    overflow-y: auto;
 }
