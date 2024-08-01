@@ -393,6 +393,21 @@ window.onclick = function (event) {
             }
         }
     }
+    // If click is outside any enlarged image, remove the 'large' class from any enlarged images
+    if (!event.target.matches('.img.large')) {
+        var enlargedImages = document.querySelectorAll('.img.large');
+        enlargedImages.forEach(image => {
+            image.classList.remove('large');
+        });
+    }
+}
+
+// Add an event listener for the scroll event to minimize any enlarged images
+window.onscroll = function () {
+    var enlargedImages = document.querySelectorAll('.img.large');
+    enlargedImages.forEach(image => {
+        image.classList.remove('large');
+    });
 }
 
 // Initialize the app

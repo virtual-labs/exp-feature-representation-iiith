@@ -54,3 +54,20 @@
     max-width: 200px;
     word-wrap: break-word;
 }
+
+.img {
+    width: 25px;
+    height: 25px;
+    transition: transform 0.2s;
+    /* Add transition for smooth scaling */
+}
+
+.img.large {
+    transform: scale(10);
+    z-index: 2;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(5);
+    transform-origin: center;
+}
