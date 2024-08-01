@@ -12,12 +12,12 @@ const datasetMappings = {
 };
 
 const featureDescriptions = {
-    'Pixel Intensity': 'Total number of pixels that are part of the digit. Greater pixel intensity means a more filled-in or bolder shape.',
-    'Aspect Ratio': 'Ratio of the width to the height of the digit. Greater aspect ratio means a wider shape.',
-    'Perimeter': 'Total length around the edge of the digit. Greater perimeter means a more complex or curved shape.',
-    'Solidity': 'Ratio of the area of the digit to the area of its convex hull. Greater solidity means a more compact and solid shape.',
-    'Convexity': 'How "outward" or rounded the digit shape is. Greater convexity means a more rounded and less indented shape.',
-    'Euler\'s Number': 'Topological property representing the number of objects in the digit image minus the number of holes. Greater Euler\'s number means fewer holes in the shape.'
+    'Pixel Intensity': '<ul><li>Total number of pixels that are part of the digit.</li><li>Greater pixel intensity means a more filled-in or bolder shape.</li></ul>',
+    'Aspect Ratio': '<ul><li>Ratio of the width to the height of the digit.</li><li>Greater aspect ratio means a wider shape.</li></ul>',
+    'Perimeter': '<ul><li>Total length around the edge of the digit.</li><li>Greater perimeter means a more complex or curved shape.</li></ul>',
+    'Solidity': '<ul><li>Ratio of the area of the digit to the area of its convex hull.</li><li>Greater solidity means a more compact and solid shape.</li></ul>',
+    'Convexity': '<ul><li>How "outward" or rounded the digit shape is.</li><li>Greater convexity means a more rounded and less indented shape.</li></ul>',
+    'Euler\'s Number': '<ul><li>Topological property representing the number of objects in the digit image minus the number of holes.</li><li>Greater Euler\'s number means fewer holes in the shape.</li></ul>'
 };
 
 let selectedFeature1 = '';
@@ -90,7 +90,7 @@ function populateTableHeaders(headers) {
 
 function showTooltip(event) {
     const tooltip = document.getElementById('tooltip');
-    tooltip.textContent = event.target.getAttribute('data-description');
+    tooltip.innerHTML = event.target.getAttribute('data-description'); // Use innerHTML to interpret HTML tags
     tooltip.style.display = 'block';
     moveTooltip(event);
 }
@@ -145,10 +145,23 @@ function populateTableRows(data) {
                 img.alt = value;
                 td.appendChild(img);
                 img.className = 'img';
+                img.addEventListener('click', function () {
+                    if (this.classList.contains('large')) {
+                        // If the clicked image is already large, remove the 'large' class
+                        this.classList.remove('large');
+                    } else {
+                        // Ensure only one img is 'large' class at a time
+                        const allImages = document.querySelectorAll('.img.large');
+                        allImages.forEach(image => {
+                            image.classList.remove('large');
+                        });
+                        this.classList.add('large');
+                    }
+                });
             } else {
                 if (!isNaN(value) && parseFloat(value) == value) {
                     // Round to three decimal places if necessary, but avoid trailing zeros
-                    value = parseFloat(value).toFixed(3).replace(/\.?0+$/, '');
+                    value = roundDecimal(value)
                 }
                 td.textContent = value;
             }
@@ -158,7 +171,8 @@ function populateTableRows(data) {
     });
 }
 
-function updateTable(){
+
+function updateTable() {
     const classFilter = datasetMappings[currentDataset];
     const filteredDataset = dataset.filter(d => classFilter.includes(parseInt(d.Class)));
     const headers = Object.keys(filteredDataset[0]);
@@ -327,7 +341,7 @@ function updatePlot() {
                     mode: 'nearest', // Show the nearest point
                     callbacks: {
                         label: function (context) {
-                            const label = context.dataset.label + ': (' + context.raw.x + ', ' + context.raw.y + ')';
+                            const label = context.dataset.label + ': (' + roundDecimal(context.raw.x) + ', ' + roundDecimal(context.raw.y) + ')';
                             return label;
                         },
                         labelPointStyle: (context) => {
@@ -350,6 +364,11 @@ function updatePlot() {
         window.myChart.destroy();
     }
     window.myChart = new Chart(ctx, config);
+}
+
+function roundDecimal(value) {
+    value = parseFloat(value).toFixed(3).replace(/\.?0+$/, '');
+    return value
 }
 
 // Hides all other dropdown-content other than the one with dropdownId

@@ -70,6 +70,15 @@ h1 {
 .img {
     width: 25px;
     height: 25px;
+    transition: transform 0.2s;
+    /* Add transition for smooth scaling */
+}
+
+.img.large {
+    transform: scale(5);
+    /* Scale the image by 3 times */
+    z-index: 2;
+    position: relative;
 }
 
 .dropdown {
