@@ -21,6 +21,13 @@
       "content-type": "text"
     },
     {
+      "unit-type": "task",
+      "label": "Pretest",
+      "content-type": "assesment",
+      "source": "pretest.json",
+      "target": "pretest.html"
+    },
+    {
       "target": "procedure.html",
       "source": "procedure.md",
       "label": "Procedure",
@@ -35,11 +42,11 @@
       "content-type": "simulation"
     },
     {
-      "target": "assignment.html",
-      "source": "assignment.md",
-      "label": "Assignment",
       "unit-type": "task",
-      "content-type": "text"
+      "label": "Posttest",
+      "content-type": "assesment",
+      "source": "posttest.json",
+      "target": "assignment.html"
     },
     {
       "target": "references.html",
