@@ -157,7 +157,8 @@ function populateTableRows(data) {
                         });
                         this.classList.add('large');
                     }
-                });
+                }
+            );
             } else {
                 if (!isNaN(value) && parseFloat(value) == value) {
                     // Round to three decimal places if necessary, but avoid trailing zeros
