@@ -30,8 +30,19 @@
     /* Align items at the start */
 }
 
-.main-content {
+.half {
+    width: 50%;
+}
+
+.small {
+    width: 30%;
+}
+
+.large {
     width: 70%;
+}
+
+.main-content {
     padding: 10px 30px;
     height: auto;
     /* Ensures height is determined by the content */
@@ -41,7 +52,6 @@
 }
 
 .visual-content {
-    width: 30%;
     border: 2px solid #cccccc;
     /* Add a subtle border */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
