@@ -9,6 +9,13 @@
     {
       "target": "theory.html",
       "source": "theory.md",
+      "js_modules": [
+        "theory/theory.js"
+      ],
+      "css_modules": [
+        "theory/index.css",
+        "theory/slider.css"
+      ],
       "label": "Theory",
       "unit-type": "task",
       "content-type": "text"
