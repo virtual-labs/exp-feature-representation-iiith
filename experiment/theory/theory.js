@@ -82,64 +82,120 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    const width = 600;
-    const height = 400;
+    const container = d3.select('#scatterplot-container');
     const svg = d3.select('#scatterplot');
-    const margin = { top: 20, right: 30, bottom: 40, left: 40 };
-    const plotWidth = width - margin.left - margin.right;
-    const plotHeight = height - margin.top - margin.bottom;
 
-    const data = d3.range(50).map(() => ({
-        x: Math.random() * plotWidth,
-        y: Math.random() * plotHeight
-    }));
+    const margin = { top: 20, right: 30, bottom: 40, left: 55 };
 
-    const xScale = d3.scaleLinear().domain([0, plotWidth]).range([0, plotWidth]);
-    const yScale = d3.scaleLinear().domain([0, plotHeight]).range([plotHeight, 0]);
+    function resize() {
+        const width = parseInt(container.style('width'));
+        const height = parseInt(container.style('height'));
 
-    const g = svg.append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`);
+        svg.attr('width', width)
+            .attr('height', height)
+            .attr('viewBox', `0 0 ${width} ${height}`);
 
-    g.selectAll('circle')
-        .data(data)
-        .enter()
-        .append('circle')
-        .attr('cx', d => xScale(d.x))
-        .attr('cy', d => yScale(d.y))
-        .attr('r', 5)
-        .attr('fill', '#007bff');
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
 
-    const lineGroup = g.append('g')
-        .attr('class', 'lines');
+        // Generate more sporadic data clusters
+        const generateCluster = (centerX, centerY, count, spread, label) => {
+            return d3.range(count).map(() => ({
+                x: centerX + (Math.random() - 0.5) * spread * 2,
+                y: centerY + (Math.random() - 0.5) * spread * 2,
+                label: label
+            }));
+        };
 
-    function updateLines(x, y) {
-        const distances = data.map(d => ({
-            ...d,
-            distance: Math.sqrt((d.x - x) ** 2 + (d.y - y) ** 2)
-        }));
+        const data = [
+            ...generateCluster(plotWidth * 0.25, plotHeight * 0.25, 10, 70, 'A'),
+            ...generateCluster(plotWidth * 0.75, plotHeight * 0.4, 10, 90, 'B'),
+            ...generateCluster(plotWidth * 0.5, plotHeight * 0.75, 10, 90, 'C')
+        ];
 
-        const nearestNeighbors = distances.sort((a, b) => a.distance - b.distance).slice(0, 5);
+        const xScale = d3.scaleLinear().domain([0, plotWidth]).range([0, plotWidth]);
+        const yScale = d3.scaleLinear().domain([0, plotHeight]).range([plotHeight, 0]);
 
-        const lines = lineGroup.selectAll('line')
-            .data(nearestNeighbors, d => d.x + ',' + d.y);
+        svg.selectAll('*').remove();
 
-        lines.enter()
-            .append('line')
-            .merge(lines)
-            .attr('x1', xScale(x))
-            .attr('y1', yScale(y))
-            .attr('x2', d => xScale(d.x))
-            .attr('y2', d => yScale(d.y))
-            .attr('stroke', '#ff0000')
-            .attr('stroke-width', 1);
+        const g = svg.append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
 
-        lines.exit().remove();
+        // Add x-axis
+        g.append('g')
+            .attr('transform', `translate(0,${plotHeight})`)
+            .call(d3.axisBottom(xScale))
+            .append('text')
+            .attr('class', 'axis-label')
+            .attr('x', plotWidth / 2)
+            .attr('y', 35)
+            .text('x_1');
+
+        // Add y-axis
+        g.append('g')
+            .call(d3.axisLeft(yScale))
+            .append('text')
+            .attr('class', 'axis-label')
+            .attr('transform', 'rotate(-90)')
+            .attr('x', -plotHeight / 2)
+            .attr('y', -35)
+            .text('x_2');
+
+        // Define color scale for classes
+        const colorScale = d3.scaleOrdinal()
+            .domain(['A', 'B', 'C'])
+            .range(['#007bff', '#ff0000', '#00ff00']);
+
+        g.selectAll('circle')
+            .data(data)
+            .enter()
+            .append('circle')
+            .attr('cx', d => xScale(d.x))
+            .attr('cy', d => yScale(d.y))
+            .attr('r', 7) // Increase the radius
+            .attr('fill', d => colorScale(d.label))
+            .attr('stroke', 'black') // Add a black border
+            .attr('stroke-width', 1)
+            .attr('class', 'dot-circle');
+
+        const lineGroup = g.append('g')
+            .attr('class', 'lines');
+
+        function updateLines(x, y) {
+            const distances = data.map(d => ({
+                ...d,
+                distance: Math.sqrt((d.x - x) ** 2 + (d.y - y) ** 2)
+            }));
+
+            const nearestNeighbors = distances.sort((a, b) => a.distance - b.distance).slice(0, 5);
+
+            const lines = lineGroup.selectAll('line')
+                .data(nearestNeighbors, d => d.x + ',' + d.y);
+
+            lines.enter()
+                .append('line')
+                .merge(lines)
+                .attr('x1', xScale(x))
+                .attr('y1', yScale(y))
+                .attr('x2', d => xScale(d.x))
+                .attr('y2', d => yScale(d.y))
+                .attr('stroke', d => colorScale(d.label)) // Use the dot's color
+                .attr('stroke-width', 1.5);
+
+            lines.exit().remove();
+        }
+
+        svg.on('mousemove', function (event) {
+            const [mouseX, mouseY] = d3.pointer(event);
+            const x = xScale.invert(mouseX - margin.left);
+            const y = yScale.invert(mouseY - margin.top);
+            updateLines(x, y);
+        });
     }
 
-    svg.on('mousemove', function (event) {
-        const [mouseX, mouseY] = d3.pointer(event);
-        const x = xScale.invert(mouseX - margin.left);
-        const y = yScale.invert(mouseY - margin.top);
-        updateLines(x, y);
-    });
+    // Initial resize
+    resize();
+
+    // Resize on window resize
+    window.addEventListener('resize', resize);
 });

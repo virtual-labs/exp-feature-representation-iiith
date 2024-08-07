@@ -5,7 +5,7 @@
 <h2 id="types-of-feature-vectors" class="section-title">Types of Feature Vectors</h2>
 <div class="section-content side-by-side">
     <div class="main-content large">
-        <p>Depending on the nature of features that are extracted, the representation could be either Fixed Length or Variable Length. In a fixed length representation, every object of every class will be represented using a fixed set of numbers. For example, for classification of different fruits, each fruit can be represented using the vector: (diameter, redness, weight). However, in certain problems, it is more appropriate not to restrict the representation to be fixed length. For example, in the problem of speech recognition, the representation of a single word could vary in length depending on the speed at which the word is pronounced or the accent of pronunciation.</p>
+        <p>Depending on the nature of features that are extracted, the representation could be either <mark>Fixed Length</mark> or <mark>Variable Length</mark>. In a fixed length representation, every object of every class will be represented using a fixed set of numbers. For example, for classification of different fruits, each fruit can be represented using the vector: (diameter, redness, weight). However, in certain problems, it is more appropriate not to restrict the representation to be fixed length. For example, in the problem of speech recognition, the representation of a single word could vary in length depending on the speed at which the word is pronounced or the accent of pronunciation.</p>
         <p>Fixed length representations are more popular due to the ease of comparing different samples. Note that fixed length feature vectors could be thought of as points in a d-dimensional vector space, commonly referred to as a feature space. We will concentrate on fixed length representations in this experiment.</p>
     </div>
     <div class="visual-content small">
@@ -36,12 +36,14 @@
 <h2 id="nearest-neighbor-classifier" class="section-title">Nearest Neighbor Classifier</h2>
 <div class="section-content side-by-side">
     <div class="main-content half">
-        <p>The Euclidean distance between two points in the feature space can be thought of as a measure of dissimilarity between the samples. This fact is used for decision making in the popular Nearest Neighbor classifier. A set of labeled samples that are obtained during training is stored in the feature space as reference points. When a new sample whose class is unknown is obtained, we compare it with each of the reference points in the feature space. The closest reference point is the most similar, and hence its class label is assigned to the unknown sample. Even though the method is very simple, it is surprisingly effective if the feature representation is good. For this reason, the performance nearest neighbor classifier is often used to compare different feature representations. In this experiment, we will use the accuracy of a nearest neighbor classifier to compare the performances of different feature representations.</p>
-        <p>A variant of the nearest neighbor algorithm is the k-nearest neighbor algorithm, where you find the class labels of the k nearest reference samples for a new test sample. The label of the test sample is decided as the majority label among the reference samples. One could also weight the labels according to their similarity (closer samples getting higher weight).</p>
+        <p>The <mark>Euclidean distance</mark> between two points in the feature space can be thought of as a measure of dissimilarity between the samples. This fact is used for decision making in the popular <mark>Nearest Neighbor classifier</mark>. A set of labeled samples that are obtained during training is stored in the feature space as reference points. When a new sample whose class is unknown is obtained, we compare it with each of the reference points in the feature space. The closest reference point is the most similar, and hence its class label is assigned to the unknown sample. Even though the method is very simple, it is surprisingly effective if the feature representation is good. For this reason, the performance of the nearest neighbor classifier is often used to compare different feature representations. In this experiment, we will use the accuracy of a nearest neighbor classifier to compare the performances of different feature representations.</p>
+        <p>A variant of the nearest neighbor algorithm is the <mark>k-nearest neighbor algorithm</mark>, where you find the class labels of the k nearest reference samples for a new test sample. The label of the test sample is decided as the majority label among the reference samples. One could also weight the labels according to their similarity (closer samples getting higher weight).</p>
     </div>
-    <div class="visual-content half">
-        <div id="scatterplot-container">
-            <svg id="scatterplot" width="600" height="400"></svg>
+    <div id="scatter-content"> 
+        <div class="visual-content" id="scatterplot-container">
+            <svg id="scatterplot"></svg>
+        </div>
+        <div class="visual-content" id ="controls-container">
         </div>
     </div>
     <script src="https://d3js.org/d3.v6.min.js"></script>
