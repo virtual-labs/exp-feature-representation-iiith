@@ -11,6 +11,20 @@ const datasetMappings = {
     "L4": [1, 3]    // Solidity and Convexity
 };
 
+const targetAccuracies = {
+    "L1": 0.93,
+    "L2": 0.93,
+    "L3": 0.82,
+    "L4": 0.98
+};
+
+const maxAccuracies = {
+    "L1": 0.97,
+    "L2": 0.97,
+    "L3": 0.86,
+    "L4": 0.99
+};
+
 const featureDescriptions = {
     'Pixel Intensity': '<ul><li>Total number of pixels that are part of the digit.</li><li>Greater pixel intensity means a more filled-in or bolder shape.</li></ul>',
     'Aspect Ratio': '<ul><li>Ratio of the width to the height of the digit.</li><li>Greater aspect ratio means a wider shape.</li></ul>',
@@ -18,6 +32,101 @@ const featureDescriptions = {
     'Solidity': '<ul><li>Ratio of the area of the digit to the area of its convex hull.</li><li>Greater solidity means a more compact and solid shape.</li></ul>',
     'Convexity': '<ul><li>How "outward" or rounded the digit shape is.</li><li>Greater convexity means a more rounded and less indented shape.</li></ul>',
     'Euler\'s Number': '<ul><li>Topological property representing the number of objects in the digit image minus the number of holes.</li><li>Greater Euler\'s number means fewer holes in the shape.</li></ul>'
+};
+
+const accuracies = {
+    "L1": {
+        "Pixel Intensity-Pixel Intensity": 0.90,
+        "Aspect Ratio-Aspect Ratio": 0.87,
+        "Perimeter-Perimeter": 0.85,
+        "Solidity-Solidity": 0.71,
+        "Convexity-Convexity": 0.64,
+        "Euler's Number-Euler's Number": 0.91,
+        "Pixel Intensity-Aspect Ratio": 0.93,
+        "Pixel Intensity-Perimeter": 0.93,
+        "Pixel Intensity-Solidity": 0.97,
+        "Pixel Intensity-Convexity": 0.93,
+        "Pixel Intensity-Euler's Number": 0.94,
+        "Aspect Ratio-Perimeter": 0.93,
+        "Aspect Ratio-Solidity": 0.86,
+        "Aspect Ratio-Convexity": 0.87,
+        "Aspect Ratio-Euler's Number": 0.96,
+        "Perimeter-Solidity": 0.88,
+        "Perimeter-Convexity": 0.93,
+        "Perimeter-Euler's Number": 0.95,
+        "Solidity-Convexity": 0.71,
+        "Solidity-Euler's Number": 0.92,
+        "Convexity-Euler's Number": 0.93
+    },
+    "L2": {
+        "Pixel Intensity-Pixel Intensity": 0.52,
+        "Aspect Ratio-Aspect Ratio": 0.53,
+        "Perimeter-Perimeter": 0.89,
+        "Solidity-Solidity": 0.77,
+        "Convexity-Convexity": 0.93,
+        "Euler's Number-Euler's Number": 0.97,
+        "Pixel Intensity-Aspect Ratio": 0.59,
+        "Pixel Intensity-Perimeter": 0.92,
+        "Pixel Intensity-Solidity": 0.82,
+        "Pixel Intensity-Convexity": 0.93,
+        "Pixel Intensity-Euler's Number": 0.97,
+        "Aspect Ratio-Perimeter": 0.92,
+        "Aspect Ratio-Solidity": 0.72,
+        "Aspect Ratio-Convexity": 0.92,
+        "Aspect Ratio-Euler's Number": 0.96,
+        "Perimeter-Solidity": 0.88,
+        "Perimeter-Convexity": 0.93,
+        "Perimeter-Euler's Number": 0.97,
+        "Solidity-Convexity": 0.92,
+        "Solidity-Euler's Number": 0.97,
+        "Convexity-Euler's Number": 0.95
+    },
+    "L3": {
+        "Pixel Intensity-Pixel Intensity": 0.47,
+        "Aspect Ratio-Aspect Ratio": 0.70,
+        "Perimeter-Perimeter": 0.74,
+        "Solidity-Solidity": 0.67,
+        "Convexity-Convexity": 0.67,
+        "Euler's Number-Euler's Number": 0.86,
+        "Pixel Intensity-Aspect Ratio": 0.69,
+        "Pixel Intensity-Perimeter": 0.82,
+        "Pixel Intensity-Solidity": 0.71,
+        "Pixel Intensity-Convexity": 0.72,
+        "Pixel Intensity-Euler's Number": 0.86,
+        "Aspect Ratio-Perimeter": 0.79,
+        "Aspect Ratio-Solidity": 0.78,
+        "Aspect Ratio-Convexity": 0.80,
+        "Aspect Ratio-Euler's Number": 0.84,
+        "Perimeter-Solidity": 0.82,
+        "Perimeter-Convexity": 0.70,
+        "Perimeter-Euler's Number": 0.85,
+        "Solidity-Convexity": 0.77,
+        "Solidity-Euler's Number": 0.83,
+        "Convexity-Euler's Number": 0.82
+    },
+    "L4": {
+        "Pixel Intensity-Pixel Intensity": 0.84,
+        "Aspect Ratio-Aspect Ratio": 0.84,
+        "Perimeter-Perimeter": 0.99,
+        "Solidity-Solidity": 0.88,
+        "Convexity-Convexity": 0.98,
+        "Euler's Number-Euler's Number": 0.53,
+        "Pixel Intensity-Aspect Ratio": 0.90,
+        "Pixel Intensity-Perimeter": 0.99,
+        "Pixel Intensity-Solidity": 0.99,
+        "Pixel Intensity-Convexity": 0.98,
+        "Pixel Intensity-Euler's Number": 0.80,
+        "Aspect Ratio-Perimeter": 0.99,
+        "Aspect Ratio-Solidity": 0.95,
+        "Aspect Ratio-Convexity": 0.99,
+        "Aspect Ratio-Euler's Number": 0.82,
+        "Perimeter-Solidity": 0.99,
+        "Perimeter-Convexity": 0.99,
+        "Perimeter-Euler's Number": 0.97,
+        "Solidity-Convexity": 0.99,
+        "Solidity-Euler's Number": 0.88,
+        "Convexity-Euler's Number": 0.97
+    }
 };
 
 let selectedFeature1 = '';
@@ -192,6 +301,8 @@ function updateTable() {
 function selectFeature(dropdownId, item) {
     if (dropdownId === 'dropdown1') {
         currentDataset = item;
+        document.getElementById('target-accuracy').textContent = targetAccuracies[item].toFixed(2);
+        document.getElementById('maximum-accuracy').textContent = maxAccuracies[item].toFixed(2);
     } else if (dropdownId === 'dropdown2') {
         selectedFeature1 = item;
     } else if (dropdownId === 'dropdown3') {
@@ -206,6 +317,15 @@ function selectFeature(dropdownId, item) {
     } else if (dropdownId === 'dropdown3') {
         document.getElementById('feature2-button').textContent = item;
     }
+
+    // Update current accuracy
+    let currentAccuracy = accuracies[currentDataset][`${selectedFeature1}-${selectedFeature1}`];
+    if (selectedFeature2 && selectedFeature1 !== selectedFeature2) {
+        const combinedFeatureKey1 = `${selectedFeature1}-${selectedFeature2}`;
+        const combinedFeatureKey2 = `${selectedFeature2}-${selectedFeature1}`;
+        currentAccuracy = accuracies[currentDataset][combinedFeatureKey1] || accuracies[currentDataset][combinedFeatureKey2] || currentAccuracy;
+    }
+    document.getElementById('current-accuracy').textContent = currentAccuracy.toFixed(2);
 
     updatePlot();
     updateTable();
@@ -232,11 +352,16 @@ async function init() {
         document.getElementById('feature1-button').innerHTML = selectedFeature1 + '<span class="arrow">&#9662;</span>';
         document.getElementById('feature2-button').innerHTML = selectedFeature2 + '<span class="arrow">&#9662;</span>';
 
+        // Initialize target and maximum accuracy
+        document.getElementById('target-accuracy').textContent = targetAccuracies[currentDataset].toFixed(2);
+        document.getElementById('maximum-accuracy').textContent = maxAccuracies[currentDataset].toFixed(2);
+
+        let currentAccuracy = accuracies[currentDataset][`${selectedFeature1}-${selectedFeature2}`] || accuracies[currentDataset][`${ selectedFeature2 }-${ selectedFeature1 }`];
+        document.getElementById('current-accuracy').textContent = currentAccuracy.toFixed(2);
+
         populateDropdown('dropdown1', datasetOptions);
         populateDropdown('dropdown2', features);
         populateDropdown('dropdown3', features);
-
-        // console.log("Initialization completed, dataset:", dataset);
 
         updatePlot(); // Initial plot
         updateTable(); // Initial Table
@@ -244,6 +369,7 @@ async function init() {
         console.error('No data available in dataset');
     }
 }
+
 
 function updatePlot() {
     if (!selectedFeature1 || !selectedFeature2) {
