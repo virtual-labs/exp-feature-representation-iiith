@@ -1,3 +1,11 @@
+#scatter-content {
+    width: 50%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+}
+
 #scatterplot-container {
     display: flex;
     justify-content: center;
@@ -25,14 +33,24 @@
 }
 
 #controls-container {
-    background-color: lightgrey;
-    height: 30%;
-}
-
-#scatter-content {
-    width: 50%;
-    box-sizing: border-box;
+    height: 35%;
     display: flex;
     flex-direction: column;
-    height: 80vh;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#controls-container h2 {
+    margin-bottom: 10px;
+}
+
+#controls-container label {
+    margin-right: 10px;
+}
+
+#controls-container select {
+    margin-bottom: 20px;
 }

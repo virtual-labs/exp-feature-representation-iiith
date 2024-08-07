@@ -43,8 +43,28 @@
         <div class="visual-content" id="scatterplot-container">
             <svg id="scatterplot"></svg>
         </div>
-        <div class="visual-content" id ="controls-container">
-        </div>
+        <div class="visual-content" id="controls-container">
+            <h2>K-Nearest Neighbors</h2>
+                <div>
+                    <label for="num-neighbors">Number of neighbors:</label>
+                    <select id="num-neighbors">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Class: </label>
+                    <span id="majority-class"></span>
+                </div>
+            </div>
     </div>
     <script src="https://d3js.org/d3.v6.min.js"></script>
 </div>

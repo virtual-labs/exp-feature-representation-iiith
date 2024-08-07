@@ -84,6 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
     const container = d3.select('#scatterplot-container');
     const svg = d3.select('#scatterplot');
+    const numNeighborsSelect = document.getElementById('num-neighbors');
+    const majorityClassSpan = document.getElementById('majority-class');
 
     const margin = { top: 20, right: 30, bottom: 40, left: 55 };
 
@@ -108,9 +110,9 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         const data = [
-            ...generateCluster(plotWidth * 0.25, plotHeight * 0.25, 10, 70, 'A'),
-            ...generateCluster(plotWidth * 0.75, plotHeight * 0.4, 10, 90, 'B'),
-            ...generateCluster(plotWidth * 0.5, plotHeight * 0.75, 10, 90, 'C')
+            ...generateCluster(plotWidth * 0.25, plotHeight * 0.25, 10, 70, 'Blue'),
+            ...generateCluster(plotWidth * 0.75, plotHeight * 0.4, 10, 90, 'Red'),
+            ...generateCluster(plotWidth * 0.5, plotHeight * 0.75, 10, 90, 'Green')
         ];
 
         const xScale = d3.scaleLinear().domain([0, plotWidth]).range([0, plotWidth]);
@@ -143,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Define color scale for classes
         const colorScale = d3.scaleOrdinal()
-            .domain(['A', 'B', 'C'])
+            .domain(['Blue', 'Red', 'Green'])
             .range(['#007bff', '#ff0000', '#00ff00']);
 
         g.selectAll('circle')
@@ -152,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .append('circle')
             .attr('cx', d => xScale(d.x))
             .attr('cy', d => yScale(d.y))
-            .attr('r', 7) // Increase the radius
+            .attr('r', 5)
             .attr('fill', d => colorScale(d.label))
             .attr('stroke', 'black') // Add a black border
             .attr('stroke-width', 1)
@@ -161,13 +163,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const lineGroup = g.append('g')
             .attr('class', 'lines');
 
-        function updateLines(x, y) {
+        function updateLinesAndClass(x, y) {
+            const k = +numNeighborsSelect.value;
             const distances = data.map(d => ({
                 ...d,
                 distance: Math.sqrt((d.x - x) ** 2 + (d.y - y) ** 2)
             }));
 
-            const nearestNeighbors = distances.sort((a, b) => a.distance - b.distance).slice(0, 5);
+            const nearestNeighbors = distances.sort((a, b) => a.distance - b.distance).slice(0, k);
+            const majorityClass = d3.rollups(nearestNeighbors, v => v.length, d => d.label)
+                .sort((a, b) => b[1] - a[1])[0][0];
+            majorityClassSpan.textContent = majorityClass;
 
             const lines = lineGroup.selectAll('line')
                 .data(nearestNeighbors, d => d.x + ',' + d.y);
@@ -189,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const [mouseX, mouseY] = d3.pointer(event);
             const x = xScale.invert(mouseX - margin.left);
             const y = yScale.invert(mouseY - margin.top);
-            updateLines(x, y);
+            updateLinesAndClass(x, y);
         });
     }
 
