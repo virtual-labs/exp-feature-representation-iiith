@@ -58,14 +58,20 @@ async function fetchCSVData() {
 }
 
 // Populate dropdown menus
-function populateDropdown(dropdownId, features) {
+function populateDropdown(dropdownId, items) {
     const dropdown = document.getElementById(dropdownId);
     dropdown.innerHTML = ''; // Clear any existing options
-    features.forEach(feature => {
+
+    items.forEach(item => {
         const a = document.createElement('a');
         a.href = '#';
-        a.textContent = feature;
-        a.onclick = () => selectFeature(dropdownId, feature);
+        if (dropdownId === 'dropdown1') {
+            a.textContent = datasetLabel(item);
+            a.onclick = () => selectFeature(dropdownId, item);
+        } else {
+            a.textContent = item;
+            a.onclick = () => selectFeature(dropdownId, item);
+        }
         dropdown.appendChild(a);
     });
 }
@@ -174,6 +180,7 @@ function populateTableRows(data) {
 
 
 function updateTable() {
+    // Updating the Table with data from the currentDataset of two classes
     const classFilter = datasetMappings[currentDataset];
     const filteredDataset = dataset.filter(d => classFilter.includes(parseInt(d.Class)));
     const headers = Object.keys(filteredDataset[0]);
@@ -193,7 +200,7 @@ function selectFeature(dropdownId, item) {
 
     // Update button text
     if (dropdownId === 'dropdown1') {
-        document.getElementById('dataset-button').textContent = item;
+        document.getElementById('dataset-button').textContent = datasetLabel(item);
     } else if (dropdownId === 'dropdown2') {
         document.getElementById('feature1-button').textContent = item;
     } else if (dropdownId === 'dropdown3') {
@@ -204,20 +211,24 @@ function selectFeature(dropdownId, item) {
     updateTable();
 }
 
+function datasetLabel(datasetId) {
+    return "Classes " + datasetMappings[datasetId][0] + " and " + datasetMappings[datasetId][1]
+}
+
 async function init() {
     console.log("Initialization started");
     dataset = await fetchCSVData();
     console.log("Fetched Dataset:", dataset); // Log the parsed dataset
     if (dataset && dataset.length > 0) {
-        const headers = Object.keys(dataset[0]); // Get all headers including Image, ImageID, Class, and features
-        features = headers.slice(3); // Extract feature names excluding Image, ImageID, and Class
+        const headers = Object.keys(dataset[0]); // Get all headers including ImageID, Class, and features
+        features = headers.slice(2); // Extract feature names excluding ImageID, and Class
 
         const datasetOptions = Object.keys(datasetMappings);
         selectedFeature1 = features[0];
         selectedFeature2 = features[1];
 
         // Set default button texts
-        document.getElementById('dataset-button').innerHTML = datasetOptions[0] + '<span class="arrow">&#9662;</span>';
+        document.getElementById('dataset-button').innerHTML = datasetLabel(datasetOptions[0]) + '<span class="arrow">&#9662;</span>';
         document.getElementById('feature1-button').innerHTML = selectedFeature1 + '<span class="arrow">&#9662;</span>';
         document.getElementById('feature2-button').innerHTML = selectedFeature2 + '<span class="arrow">&#9662;</span>';
 
