@@ -9,6 +9,14 @@
     {
       "target": "theory.html",
       "source": "theory.md",
+      "js_modules": [
+        "theory/theory.js"
+      ],
+      "css_modules": [
+        "theory/index.css",
+        "theory/slider.css",
+        "theory/scatterplot.css"
+      ],
       "label": "Theory",
       "unit-type": "task",
       "content-type": "text"
@@ -19,6 +27,13 @@
       "label": "Objective",
       "unit-type": "task",
       "content-type": "text"
+    },
+    {
+      "unit-type": "task",
+      "label": "Pretest",
+      "content-type": "assesment",
+      "source": "pretest.json",
+      "target": "pretest.html"
     },
     {
       "target": "procedure.html",
@@ -35,11 +50,11 @@
       "content-type": "simulation"
     },
     {
-      "target": "assignment.html",
-      "source": "assignment.md",
-      "label": "Assignment",
       "unit-type": "task",
-      "content-type": "text"
+      "label": "Posttest",
+      "content-type": "assesment",
+      "source": "posttest.json",
+      "target": "assignment.html"
     },
     {
       "target": "references.html",
