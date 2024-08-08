@@ -1,20 +1,47 @@
-Note the structure of the lab: The first pane allows you to select a dataset from a list of available ones. Each dataset has a set of features that have been extracted for your use. You are required to select or create two features for each dataset such that resultant feature space representation is effective. You can visualize the data in the feature space, once you define the features. You can also check the accuracy of the resulting nearest neighbor classifier on a set of test samples.
+# Experiment Instructions
 
-**Stage 1:**
+Welcome to the Pattern Recognition Experiment. In this simulation, your objective is to identify the most effective features for classifying datasets characterized by two digits. Follow the stages below to understand the process and achieve the target accuracy for each dataset.
 
-  1. Load the 0-1 dataset and select the first two features.
-  2. Display the samples in a 2-d feature space.
-  3. Click the classify button to check the accuracy of the NN classifier for the chosen representation.
-  4. Note the target accuracy for the experiment. Modify the features to achieve the target accuracy.
-    Note: You can get a complete view of the data samples and the corresponding features below the experiment pane. Plot different features to get an idea of the nature of different features. Derive new features based on this by combining multiple features using addition or multiplication. 
+## **Stage 1: Initial Exploration**
 
-**Stage 2:**
+1. **Load Dataset:**
+   - Select a dataset from the available list. Each dataset represents a pair of digits (e.g., 0-1, 3-8, 5-6, 1-3).
 
-  1. Repeat the above procedure for the different datasets given in the experiment. In each case, note the target accuracy and try to achieve it. Note that in some cases, you may not be able to cross the target accuracy using the provided features only (see next stage).
+2. **Select Features:**
+   - Choose the first two features from the dropdown menus. These features will be used to create a 2D feature space representation.
 
-**Stage 3:**
+3. **Visualize Data:**
+   - Display the samples in a 2D feature space. This scatter plot will help you visualize the distribution of the data points based on the selected features.
 
-  1. Read the instructions on how to extract your own features for the datasets. Extract the features using your favorite programming environment, and dump the features into an xml file in the specified format.
+4. **Check Accuracy:**
+   - The simulation automatically evaluates the accuracy of the nearest neighbor (NN) classifier for the chosen features.
 
-  2. Use these new features that you created to achieve the target accuracy in cases where you were not able to do with the features provided.
+5. **Aim for Target Accuracy:**
+   - Note the target accuracy for the dataset. Your goal is to modify the selected features to achieve or surpass this target accuracy. Use the descriptions provided by hovering over each feature in the table to understand their characteristics.
 
+## **Stage 2: Iterative Improvement**
+
+1. **Explore Different Datasets:**
+   - Repeat the procedure for each dataset provided in the experiment. For each dataset, identify the features that lead to the highest classification accuracy.
+
+2. **Experiment with Feature Combinations:**
+   - Plot different features to understand their behavior and impact on classification accuracy.
+
+3. **Evaluate Current and Maximum Accuracy:**
+   - Use the current accuracy displayed to assess the effectiveness of your chosen features. The maximum accuracy indicates the performance of the best feature pair available.
+
+4. **Identify and Analyze Outliers:**
+   - Observe any outliers in the clusters on the scatter plot. Hover over these outliers to see the image and understand why it might be an outlier. Analyzing the shape and peculiarities of these images can provide insights into the feature selection and its impact on classification accuracy.
+
+## **Additional Features of the Simulation**
+
+- **Feature Descriptions:**
+  - Hover over each feature in the table to view a detailed description of what each feature represents. This will help you understand the significance of each feature.
+
+- **Data Point Details:**
+  - Hover over each dot on the scatterplot to see the corresponding image and exact feature values. This visualization aids in comprehending the distribution and characteristics of the data points.
+
+- **Image Zoom:**
+  - Click on the images in the table to view a zoomed-in version. This allows for a closer inspection of the digit representations.
+
+Your objective throughout this experiment is to strategically select and combine features to achieve the target accuracy for each dataset, ultimately demonstrating an effective feature space representation for digit classification. Maintain an analytical approach as you explore, evaluate, and refine your feature selections.
