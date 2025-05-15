@@ -1,92 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Pattern Recognition: Feature Extraction</title>
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/table.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feature Representation & Classification</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .btn {
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+  </style>
 </head>
+<body class="bg-gray-50 text-gray-800">
 
-<body>
-	<div id="container">
-		<h1 class="title">Pattern Recognition: Experiment 1 - Feature Extraction</h1>
-		<div class="top-section section">
-			<div class="graph-container light-grey-1">
-				<canvas id="plot"></canvas>
-			</div>
-			<div class="controls-container">
-				<div class="controls-tab light-grey-2">
-					<div class="controls-textbox">Dataset:</div>
-					<div class="dropdown">
-						<button id="dataset-button" onclick="toggleDropdown('dropdown1')" class="dropdown-button">
-							<span class="arrow">&#9662;</span>
-						</button>
-						<div id="dropdown1" class="dropdown-content">
-							<!-- Options will be populated dynamically -->
-						</div>
-					</div>
-				</div>
-				<div class="controls-tab light-grey-1">
-					<div class="controls-textbox">Feature1:</div>
-					<div class="dropdown">
-						<button id="feature1-button" onclick="toggleDropdown('dropdown2')" class="dropdown-button">
-							<span class="arrow">&#9662;</span>
-						</button>
-						<div id="dropdown2" class="dropdown-content">
-							<!-- Options will be populated dynamically -->
-						</div>
-					</div>
-				</div>
-				<div class="controls-tab light-grey-2">
-					<div class="controls-textbox">Feature2:</div>
-					<div class="dropdown">
-						<button id="feature2-button" onclick="toggleDropdown('dropdown3')" class="dropdown-button">
-							<span class="arrow">&#9662;</span>
-						</button>
-						<div id="dropdown3" class="dropdown-content">
-							<!-- Options will be populated dynamically -->
-						</div>
-					</div>
-				</div>
-				<div class="controls-tab light-grey-1">
-					<div class="controls-textbox">Target Accuracy: <span id="target-accuracy">0.00</span></div>
-				</div>
-				<div class="controls-tab light-grey-2">
-					<div class="controls-textbox">Current Accuracy: <span id="current-accuracy">0.00</span></div>
-				</div>
-				<div class="controls-tab light-grey-1">
-					<div class="controls-textbox">Maximum Accuracy: <span id="maximum-accuracy">0.00</span></div>
-				</div>
-			</div>
-		</div>
-		<div class="bottom-section section">
-			<div class="table-container">
-				<div class="table-header-container">
-					<table id="header-table">
-						<thead>
-							<tr id="table-headers">
-								<!-- Table headers will be dynamically populated here -->
-							</tr>
-						</thead>
-					</table>
-				</div>
-				<div class="table-body-container">
-					<table id="data-table">
-						<tbody>
-							<!-- Table rows will be dynamically populated here -->
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="spacer"></div>
-		<div id="tooltip" class="tooltip"></div>
+  <header class="gradient-bg text-white py-8 px-6 mb-10 shadow-lg">
+    <div class="max-w-5xl mx-auto">
+      <h1 class="text-5xl font-bold text-center mb-4">Feature Representation & Classification</h1>
+      <p class="text-center text-lg opacity-90 max-w-3xl mx-auto">Interactive visualization of feature space and k-NN classification</p>
+    </div>
+  </header>
 
-	</div>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="js/main.js"></script>
+  <div class="max-w-5xl mx-auto px-6 pb-16 space-y-12">
+    <section id="intro" class="grid md:grid-cols-2 gap-8">
+      <div class="card bg-white p-6 rounded-xl shadow">
+        <h2 class="text-2xl font-semibold text-indigo-700 mb-3">Aim</h2>
+        <p class="text-gray-700">The representation of an object in a computer plays the most critical role in our ability to distinguish it as a member of a class. In this experiment, we explore feature space, create custom features, and evaluate classification performance using a nearest neighbor approach.</p>
+      </div>
+      
+      <div class="card bg-white p-6 rounded-xl shadow">
+        <h2 class="text-2xl font-semibold text-indigo-700 mb-3">Theory</h2>
+        <p class="text-gray-700">Feature extraction converts real-world complex objects into a feature vector. Fixed-length vectors help in easier comparison and classification, which we use in this experiment. The k-Nearest Neighbor (k-NN) classifier uses distance metrics to assign class labels. The quality of the feature representation heavily impacts classifier performance.</p>
+      </div>
+    </section>
+
+    <section id="objective-procedure" class="grid md:grid-cols-2 gap-8">
+      <div class="card bg-white p-6 rounded-xl shadow">
+        <h2 class="text-2xl font-semibold text-indigo-700 mb-3">Objective</h2>
+        <ul class="list-disc pl-6 space-y-1 text-gray-700">
+          <li>Understand feature representation in classification.</li>
+          <li>Visualize features and their effect on separability.</li>
+          <li>Experiment with k-NN classification.</li>
+          <li>Test effect of scaling and feature engineering.</li>
+        </ul>
+      </div>
+      
+      <div class="card bg-white p-6 rounded-xl shadow">
+        <h2 class="text-2xl font-semibold text-indigo-700 mb-3">Procedure</h2>
+        <ol class="list-decimal pl-6 space-y-1 text-gray-700">
+          <li>Select or generate data points with features and labels.</li>
+          <li>Visualize them in 2D space.</li>
+          <li>Run k-NN on the data and classify a test point.</li>
+          <li>Observe classification changes with different features or scaling.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="simulation" class="bg-white p-8 rounded-xl shadow-lg">
+      <h2 class="text-3xl font-semibold text-indigo-700 mb-6">Interactive Simulation</h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="md:col-span-2">
+          <canvas id="featureCanvas" width="500" height="400" class="bg-gray-50 rounded-lg shadow-inner"></canvas>
+        </div>
+        
+        <div class="space-y-6">
+          <div class="bg-indigo-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg text-indigo-800 mb-3">Controls</h3>
+            
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Number of neighbors (k): 
+                </label>
+                <input type="range" id="kInput" min="1" max="15" value="3" 
+                       class="w-full accent-indigo-600" oninput="updateKValue()">
+                <div class="text-center font-bold text-indigo-600" id="kValue">3</div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Data distribution:</label>
+                <select id="distributionType" class="w-full p-2 border rounded">
+                  <option value="separated">Well Separated</option>
+                  <option value="overlapping">Overlapping</option>
+                  <option value="circles">Concentric</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Feature Scaling:</label>
+                <select id="featureScaling" class="w-full p-2 border rounded">
+                  <option value="none">None</option>
+                  <option value="standard">Standardization</option>
+                  <option value="minmax">Min-Max Scaling</option>
+                </select>
+              </div>
+              
+              <div class="pt-2">
+                <button onclick="generateData()" class="btn w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow">
+                  Generate Data
+                </button>
+              </div>
+              
+              <div>
+                <button onclick="classifyPoint()" class="btn w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow">
+                  Classify New Point
+                </button>
+              </div>
+              
+              <div>
+                <button onclick="classifyMultiplePoints()" class="btn w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg shadow">
+                  Simulate Multiple Tests
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-indigo-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg text-indigo-800 mb-2">Results</h3>
+            <div id="resultStats" class="text-center p-2">
+              <div class="text-gray-700">Classification accuracy: <span id="accuracy" class="font-bold text-indigo-700">-</span></div>
+              <div class="text-gray-700 mt-1">Correct/Total: <span id="correctCount" class="font-bold text-indigo-700">-</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid md:grid-cols-2 gap-8">
+      <div class="card bg-white p-6 rounded-xl shadow">
+        <h2 class="text-2xl font-semibold text-indigo-700 mb-3">Assignment</h2>
+        <ul class="list-disc pl-6 space-y-1 text-gray-700">
+          <li>Create a dataset where feature scaling affects classification.</li>
+          <li>Compare accuracy of k-NN using original vs engineered features.</li>
+          <li>Explore effect of different values of k.</li>
+          <li>Document how the decision boundaries change with different parameters.</li>
+        </ul>
+      </div>
+      
+      <div class="card bg-white p-6 rounded-xl shadow">
+        <h2 class="text-2xl font-semibold text-indigo-700 mb-3">References</h2>
+        <ul class="list-disc pl-6 space-y-1 text-gray-700">
+          <li>Duda, Hart & Stork - Pattern Classification</li>
+          <li>MIT OpenCourseWare - Machine Learning Lectures</li>
+          <li>Scikit-learn Documentation - kNN Classification</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="feedback" class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-2xl font-semibold text-indigo-700 mb-3">Feedback</h2>
+      <textarea class="w-full border border-gray-300 p-3 rounded-lg h-32" placeholder="Your thoughts and observations..."></textarea>
+      <div class="flex space-x-4 mt-3">
+        <input type="text" class="flex-1 border border-gray-300 p-2 rounded-lg" placeholder="Your name">
+        <button class="btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow">
+          Submit
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <footer class="bg-gray-800 text-white py-6 px-6 text-center">
+    <p>© 2025 Virtual Labs</p>
+  </footer>
+
+  <script>
+    let ctx = document.getElementById('featureCanvas').getContext('2d');
+    let chart;
+    let dataPoints = [];
+    let labels = [];
+    let scaledDataPoints = [];
+    const colors = ['rgba(239, 68, 68, 0.7)', 'rgba(59, 130, 246, 0.7)'];
+    const borderColors = ['rgb(220, 38, 38)', 'rgb(29, 78, 216)'];
+    let testResults = { correct: 0, total: 0 };
+
+    function updateKValue() {
+      const kValue = document.getElementById('kInput').value;
+      document.getElementById('kValue').textContent = kValue;
+    }
+
+    function generateData() {
+      dataPoints = [];
+      labels = [];
+      testResults = { correct: 0, total: 0 };
+      document.getElementById('accuracy').textContent = '-';
+      document.getElementById('correctCount').textContent = '-';
+      
+      const distributionType = document.getElementById('distributionType').value;
+      
+      if (distributionType === 'separated') {
+        // Well separated clusters
+        for (let i = 0; i < 30; i++) {
+          const x = Math.random() * 4 + 2;
+          const y = Math.random() * 4 + 2;
+          dataPoints.push({x, y});
+          labels.push(0);
+        }
+        for (let i = 0; i < 30; i++) {
+          const x = Math.random() * 4 + 9;
+          const y = Math.random() * 4 + 9;
+          dataPoints.push({x, y});
+          labels.push(1);
+        }
+      } else if (distributionType === 'overlapping') {
+        // Overlapping clusters
+        for (let i = 0; i < 30; i++) {
+          const x = Math.random() * 6 + 4;
+          const y = Math.random() * 6 + 4;
+          dataPoints.push({x, y});
+          labels.push(0);
+        }
+        for (let i = 0; i < 30; i++) {
+          const x = Math.random() * 6 + 6;
+          const y = Math.random() * 6 + 6;
+          dataPoints.push({x, y});
+          labels.push(1);
+        }
+      } else if (distributionType === 'circles') {
+        // Concentric pattern - kNN will struggle with this
+        for (let i = 0; i < 60; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          // Inner circle (class 0)
+          const radius = Math.random() * 2 + 1;
+          const x = Math.cos(angle) * radius + 7.5;
+          const y = Math.sin(angle) * radius + 7.5;
+          dataPoints.push({x, y});
+          labels.push(0);
+        }
+        for (let i = 0; i < 60; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          // Outer ring (class 1)
+          const radius = Math.random() * 2 + 5;
+          const x = Math.cos(angle) * radius + 7.5;
+          const y = Math.sin(angle) * radius + 7.5;
+          dataPoints.push({x, y});
+          labels.push(1);
+        }
+      }
+      
+      applyFeatureScaling();
+      renderChart();
+    }
+
+    function applyFeatureScaling() {
+      const scalingType = document.getElementById('featureScaling').value;
+      scaledDataPoints = [...dataPoints];
+      
+      if (scalingType === 'none') {
+        return;
+      }
+      
+      let xValues = dataPoints.map(p => p.x);
+      let yValues = dataPoints.map(p => p.y);
+      
+      if (scalingType === 'standard') {
+        // Standardization (z-score)
+        const xMean = xValues.reduce((a, b) => a + b, 0) / xValues.length;
+        const yMean = yValues.reduce((a, b) => a + b, 0) / yValues.length;
+        
+        const xStd = Math.sqrt(xValues.map(x => Math.pow(x - xMean, 2)).reduce((a, b) => a + b, 0) / xValues.length);
+        const yStd = Math.sqrt(yValues.map(y => Math.pow(y - yMean, 2)).reduce((a, b) => a + b, 0) / yValues.length);
+        
+        scaledDataPoints = dataPoints.map(pt => ({
+          x: (pt.x - xMean) / xStd * 3 + 7.5,
+          y: (pt.y - yMean) / yStd * 3 + 7.5
+        }));
+      } else if (scalingType === 'minmax') {
+        // Min-Max scaling
+        const xMin = Math.min(...xValues);
+        const xMax = Math.max(...xValues);
+        const yMin = Math.min(...yValues);
+        const yMax = Math.max(...yValues);
+        
+        scaledDataPoints = dataPoints.map(pt => ({
+          x: ((pt.x - xMin) / (xMax - xMin)) * 10 + 2.5,
+          y: ((pt.y - yMin) / (yMax - yMin)) * 10 + 2.5
+        }));
+      }
+    }
+
+    function renderChart(testPoints = []) {
+      const datasets = [0, 1].map(cls => ({
+        label: `Class ${cls}`,
+        data: scaledDataPoints.filter((_, i) => labels[i] === cls),
+        backgroundColor: colors[cls],
+        borderColor: borderColors[cls],
+        borderWidth: 1,
+        pointRadius: 6,
+      }));
+
+      // Add test points
+      if (testPoints.length > 0) {
+        testPoints.forEach(tp => {
+          datasets.push({
+            label: "Test Point",
+            data: [tp.point],
+            backgroundColor: tp.predictedLabel !== null ? colors[tp.predictedLabel] : "rgba(75, 85, 99, 0.7)",
+            borderColor: tp.predictedLabel !== null ? borderColors[tp.predictedLabel] : "rgb(55, 65, 81)",
+            borderWidth: 2,
+            pointRadius: 8,
+            pointStyle: 'triangle'
+          });
+        });
+      }
+
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'scatter',
+        data: { datasets },
+        options: {
+          responsive: true,
+          animation: {
+            duration: 1000,
+            easing: 'easeOutQuart'
+          },
+          plugins: {
+            legend: {
+              labels: {
+                font: {
+                  family: 'Poppins',
+                  size: 12
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.dataset.label || '';
+                  const x = context.parsed.x.toFixed(2);
+                  const y = context.parsed.y.toFixed(2);
+                  return `${label}: (${x}, ${y})`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: { 
+              type: 'linear', 
+              position: 'bottom', 
+              min: 0, 
+              max: 15,
+              title: {
+                display: true,
+                text: 'Feature X',
+                font: {
+                  family: 'Poppins',
+                  size: 14
+                }
+              }
+            },
+            y: { 
+              min: 0, 
+              max: 15,
+              title: {
+                display: true,
+                text: 'Feature Y',
+                font: {
+                  family: 'Poppins',
+                  size: 14
+                }
+              }
+            },
+          },
+        },
+      });
+    }
+
+    function classifyPoint() {
+      // Generate a random test point
+      const testPoint = {
+        x: Math.random() * 15,
+        y: Math.random() * 15
+      };
+
+      // Apply the same scaling as used for the data
+      let scaledTestPoint = {...testPoint};
+      const scalingType = document.getElementById('featureScaling').value;
+      
+      if (scalingType !== 'none') {
+        // We need to apply the same transformation to the test point
+        // For simplicity, we'll just generate the test point in the scaled space
+        scaledTestPoint = testPoint;
+      }
+      
+      const predicted = knnClassify(scaledTestPoint);
+      renderChart([{point: scaledTestPoint, predictedLabel: predicted}]);
+    }
+
+    function classifyMultiplePoints() {
+      // Simulate multiple classifications to estimate accuracy
+      const numTests = 100;
+      const testPoints = [];
+      testResults = { correct: 0, total: 0 };
+      
+      for (let i = 0; i < numTests; i++) {
+        // Generate random test point
+        const x = Math.random() * 15;
+        const y = Math.random() * 15;
+        const testPoint = {x, y};
+        
+        // Determine true label based on the distribution pattern
+        let trueLabel;
+        const dist = document.getElementById('distributionType').value;
+        
+        if (dist === 'separated') {
+          // For separated clusters
+          trueLabel = (x < 7 && y < 7) ? 0 : 1;
+        } else if (dist === 'overlapping') {
+          // For overlapping data, use distance from centers
+          const dist0 = Math.hypot(x - 7, y - 7);
+          const dist1 = Math.hypot(x - 9, y - 9);
+          trueLabel = (dist0 < dist1) ? 0 : 1;
+        } else if (dist === 'circles') {
+          // For concentric circles
+          const distFromCenter = Math.hypot(x - 7.5, y - 7.5);
+          trueLabel = (distFromCenter < 4) ? 0 : 1;
+        }
+        
+        // Classify with kNN
+        const predictedLabel = knnClassify(testPoint);
+        
+        // Record results
+        if (predictedLabel === trueLabel) {
+          testResults.correct++;
+        }
+        testResults.total++;
+        
+        // Add to visualization (only show the first 5)
+        if (i < 5) {
+          testPoints.push({
+            point: testPoint,
+            predictedLabel: predictedLabel
+          });
+        }
+      }
+      
+      // Update the UI with results
+      const accuracy = (testResults.correct / testResults.total * 100).toFixed(1);
+      document.getElementById('accuracy').textContent = `${accuracy}%`;
+      document.getElementById('correctCount').textContent = `${testResults.correct}/${testResults.total}`;
+      
+      // Render the chart with test points
+      renderChart(testPoints);
+    }
+
+    function knnClassify(testPoint) {
+      const k = parseInt(document.getElementById('kInput').value);
+      
+      const distances = scaledDataPoints.map((pt, i) => ({
+        dist: Math.hypot(pt.x - testPoint.x, pt.y - testPoint.y),
+        label: labels[i]
+      }));
+
+      distances.sort((a, b) => a.dist - b.dist);
+      const kNearest = distances.slice(0, k);
+      
+      // Count votes for each class
+      const votes = [0, 0];
+      kNearest.forEach(n => votes[n.label]++);
+
+      // Return the class with most votes (ties go to class 1)
+      return votes[0] > votes[1] ? 0 : 1;
+    }
+
+    // Initialize the visualization
+    generateData();
+  </script>
 </body>
-
 </html>
