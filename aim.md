@@ -1,0 +1,1 @@
+The representation of an object in a computer plays the most critical role in our ability to distinguish it as a member of a class. In this experiment, we explore feature space, create custom features, and evaluate classification performance using a nearest neighbor approach.

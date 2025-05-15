@@ -1,0 +1,73 @@
+{
+    "version": 2.0,
+    "questions": [
+        {
+            "question": "Q1. What is the effect of correlation between two features on the feature space representation?",
+            "answers": {
+                "a": "Correlation can help in identifying the relationship between features.",
+                "b": "Highly correlated features may provide redundant information.",
+                "c": "Correlation can affect the shape and orientation of the feature space.",
+                "d": "All of the above"
+            },
+            "correctAnswer": "d",
+            "explanations": {
+                "a": "While true, it is not the complete effect of correlation.",
+                "b": "Highly correlated features often provide redundant information which can affect model performance.",
+                "c": "Correlation affects the shape and orientation of the feature space representation.",
+                "d": "This is the most comprehensive answer, covering all aspects."
+            },
+            "difficulty": "intermediate"
+        },
+        {
+            "question": "Q2. Is it possible that the addition of a new feature decrease the accuracy of the NN classifier? How?",
+            "answers": {
+                "a": "Yes, due to the curse of dimensionality.",
+                "b": "No, more features always improve accuracy.",
+                "c": "Yes, because new features can add noise.",
+                "d": "No, the accuracy remains the same."
+            },
+            "correctAnswer": "a",
+            "explanations": {
+                "a": "Adding new features can increase the dimensionality, which may dilute the effectiveness of each feature.",
+                "b": "This is incorrect; more features can sometimes reduce accuracy.",
+                "c": "Adding new features can add noise, but the main issue is the curse of dimensionality.",
+                "d": "This is incorrect; adding features can change accuracy."
+            },
+            "difficulty": "intermediate"
+        },
+        {
+            "question": "Q3. Is it correct that for nearest neighbor classifier, it is always best to have all features scaled to the same range? Show why or give a counter example.",
+            "answers": {
+                "a": "Yes, scaling features helps to ensure each feature contributes equally.",
+                "b": "No, scaling features does not impact NN classifiers.",
+                "c": "Yes, because unscaled features can dominate the distance calculation.",
+                "d": "No, sometimes unscaled features provide better results."
+            },
+            "correctAnswer": "a",
+            "explanations": {
+                "a": "Scaling ensures that each feature contributes equally to the distance metric.",
+                "b": "This is incorrect; scaling can significantly impact distance calculations.",
+                "c": "Unscaled features can dominate the distance calculation, but scaling helps.",
+                "d": "Generally, scaling is preferred, making this a less common case."
+            },
+            "difficulty": "intermediate"
+        },
+        {
+            "question": "Q4. Can the nearest neighbor classifier be applied to feature vectors of different length? Is it possible to do so if you have a function that takes in two feature vectors (possibly of different lengths), and outputs the similarity/distance between them? Suggest a possible function of this nature, and a classification problem, where it can be applied.",
+            "answers": {
+                "a": "Yes, by using a custom distance function like Dynamic Time Warping (DTW).",
+                "b": "No, all feature vectors must be of the same length.",
+                "c": "Yes, by padding shorter vectors with zeros.",
+                "d": "No, using vectors of different lengths would lead to errors."
+            },
+            "correctAnswer": "a",
+            "explanations": {
+                "a": "DTW can handle varying lengths by finding the optimal alignment between feature vectors.",
+                "b": "This is incorrect; custom distance functions can handle different lengths.",
+                "c": "Padding is a solution but not as effective as using custom distance functions.",
+                "d": "This is incorrect; custom distance functions can handle different lengths."
+            },
+            "difficulty": "advanced"
+        }
+    ]
+}

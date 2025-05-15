@@ -1,0 +1,74 @@
+.slider-control {
+    display: flex;
+    align-items: center;
+    /* Center vertically */
+    gap: 8px;
+    /* Increase gap for better spacing */
+    padding: 6px 0;
+    /* Add padding for better alignment */
+}
+
+.slider-control label {
+    width: 30%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333333;
+    /* Darker color for better readability */
+    text-align: left;
+    /* Ensure labels are right-aligned */
+}
+
+.slider-control input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 70%;
+    height: 8px;
+    /* Thicker slider for better visibility */
+    background: #dddddd;
+    /* Light grey background */
+    border-radius: 5px;
+    /* Rounded corners */
+    outline: none;
+    opacity: 0.7;
+    /* Slight transparency */
+    transition: opacity 0.2s;
+    margin-left: auto;
+    /* Push the slider to the right */
+}
+
+.slider-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    /* Larger thumb for easier handling */
+    height: 20px;
+    border-radius: 50%;
+    /* Make thumb round */
+    background: #007bff;
+    /* Blue color for thumb */
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.slider-control input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #007bff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.slider-control input[type="range"]:hover {
+    opacity: 1;
+    /* Full opacity on hover */
+}
+
+.slider-control input[type="range"]::-webkit-slider-thumb:hover {
+    background: #0056b3;
+    /* Darker blue on hover */
+}
+
+.slider-control input[type="range"]::-moz-range-thumb:hover {
+    background: #0056b3;
+}

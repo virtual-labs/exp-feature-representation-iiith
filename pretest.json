@@ -1,0 +1,107 @@
+{
+    "version": 2.0,
+    "questions": [
+        {
+            "question": "Q1. What is feature extraction in the context of pattern classification?",
+            "answers": {
+                "a": "The process of capturing properties of a class that differentiate it from other classes.",
+                "b": "The process of converting a sequence of numbers into a real-world object.",
+                "c": "The process of labeling samples during training.",
+                "d": "The process of storing reference points in the feature space."
+            },
+            "correctAnswer": "a",
+            "explanations": {
+                "a": "Feature extraction aims to capture properties that make classes different from each other.",
+                "b": "This reverses the actual process of feature extraction.",
+                "c": "This is related to the training phase but not to feature extraction itself.",
+                "d": "This describes a step in the nearest neighbor classification, not feature extraction."
+            },
+            "difficulty": "beginner"
+        },
+        {
+            "question": "Q2. Why are fixed length feature representations more popular?",
+            "answers": {
+                "a": "They allow for easy comparison of different samples.",
+                "b": "They require less computational power.",
+                "c": "They can handle varying lengths of feature vectors.",
+                "d": "They adapt better to different problems."
+            },
+            "correctAnswer": "a",
+            "explanations": {
+                "a": "Fixed length representations simplify the comparison of different samples.",
+                "b": "The computational power required is not a primary reason for their popularity.",
+                "c": "Fixed length representations cannot handle varying lengths of feature vectors.",
+                "d": "They do not necessarily adapt better to different problems."
+            },
+            "difficulty": "beginner"
+        },
+        {
+            "question": "Q3. How does the nearest neighbor classifier make decisions?",
+            "answers": {
+                "a": "By comparing a new sample with each reference point and assigning the class of the closest reference point.",
+                "b": "By comparing a new sample with multiple reference points and assigning the most frequent class label.",
+                "c": "By weighting the features according to their scales.",
+                "d": "By transforming feature vectors to variable lengths."
+            },
+            "correctAnswer": "a",
+            "explanations": {
+                "a": "The nearest neighbor classifier assigns the class label of the closest reference point to the new sample.",
+                "b": "This describes the k-nearest neighbor algorithm, not the nearest neighbor classifier.",
+                "c": "This relates to feature scaling, not to the decision-making process.",
+                "d": "The nearest neighbor classifier uses fixed length feature vectors."
+            },
+            "difficulty": "beginner"
+        },
+        {
+            "question": "Q4. What is a variant of the nearest neighbor algorithm?",
+            "answers": {
+                "a": "k-nearest neighbor algorithm.",
+                "b": "Weighted nearest neighbor algorithm.",
+                "c": "Nearest neighbor regression.",
+                "d": "Dynamic Time Warping."
+            },
+            "correctAnswer": "a",
+            "explanations": {
+                "a": "The k-nearest neighbor algorithm is a common variant where the k closest reference samples are considered.",
+                "b": "While weighting is part of k-nearest neighbors, it is not a standalone variant.",
+                "c": "Nearest neighbor regression is not a standard variant of the algorithm.",
+                "d": "Dynamic Time Warping is a technique for measuring similarity, not a nearest neighbor variant."
+            },
+            "difficulty": "intermediate"
+        },
+        {
+            "question": "Q5. Why is it important to scale features to similar ranges in nearest neighbor classification?",
+            "answers": {
+                "a": "To ensure that each feature contributes equally to the distance calculation.",
+                "b": "To reduce the computational complexity.",
+                "c": "To increase the number of features used in the classification.",
+                "d": "To avoid transforming feature vectors to variable lengths."
+            },
+            "correctAnswer": "a",
+            "explanations": {
+                "a": "Scaling ensures that no single feature dominates the distance calculation due to its range.",
+                "b": "Scaling does not primarily affect computational complexity.",
+                "c": "Scaling does not affect the number of features.",
+                "d": "Scaling does not involve transforming feature vectors to variable lengths."
+            },
+            "difficulty": "beginner"
+        },
+        {
+            "question": "Q6. What is the effect of using binary valued features in the feature space representation?",
+            "answers": {
+                "a": "They can make the feature space more sparse.",
+                "b": "They require more complex distance calculations.",
+                "c": "They make the feature space more dense.",
+                "d": "They eliminate the need for scaling features."
+            },
+            "correctAnswer": "a",
+            "explanations": {
+                "a": "Binary valued features can result in a sparse feature space as many feature combinations may not be present.",
+                "b": "Binary valued features typically simplify distance calculations.",
+                "c": "Binary valued features do not make the feature space more dense.",
+                "d": "Scaling may still be necessary depending on the other features."
+            },
+            "difficulty": "intermediate"
+        }
+    ]
+}
