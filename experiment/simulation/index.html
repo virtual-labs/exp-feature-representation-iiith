@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<head>  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Feature Representation & Classification</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -10,6 +9,7 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
     }
     .gradient-bg {
       background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -30,32 +30,49 @@
     .btn:active {
       transform: translateY(0);
     }
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .card:hover {
+        transform: translateY(-3px);
+      }
+      .btn {
+        touch-action: manipulation;
+      }
+      input[type="range"] {
+        height: 24px;
+      }
+    }
+    /* Make canvas container responsive */
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-
-  <header class="gradient-bg text-white py-8 px-6 mb-10 shadow-lg">
+  <header class="gradient-bg text-white py-6 sm:py-8 px-4 sm:px-6 mb-6 sm:mb-10 shadow-lg">
     <div class="max-w-5xl mx-auto">
-      <h1 class="text-5xl font-bold text-center mb-4">Feature Representation & Classification</h1>
-      <p class="text-center text-lg opacity-90 max-w-3xl mx-auto">Interactive visualization of feature space and k-NN classification</p>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-3 sm:mb-4">Feature Representation & Classification</h1>
+      <p class="text-center text-base sm:text-lg opacity-90 max-w-3xl mx-auto">Interactive visualization of feature space and k-NN classification</p>
     </div>
   </header>
 
-  <div class="max-w-5xl mx-auto px-6 pb-16 space-y-12">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16 space-y-8 sm:space-y-12">
 
-    <section id="simulation" class="bg-white p-8 rounded-xl shadow-lg">
-      <h2 class="text-3xl font-semibold text-indigo-700 mb-6">Interactive Simulation</h2>
+    <section id="simulation" class="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-lg">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-indigo-700 mb-4 sm:mb-6">Interactive Simulation</h2>
       
-      <div class="grid md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         <div class="md:col-span-2">
-          <canvas id="featureCanvas" width="500" height="400" class="bg-gray-50 rounded-lg shadow-inner"></canvas>
+          <div class="w-full h-[300px] sm:h-[350px] md:h-[400px]">
+            <canvas id="featureCanvas" class="bg-gray-50 rounded-lg shadow-inner w-full h-full"></canvas>
+          </div>
         </div>
         
-        <div class="space-y-6">
-          <div class="bg-indigo-50 p-4 rounded-lg">
-            <h3 class="font-semibold text-lg text-indigo-800 mb-3">Controls</h3>
-            
-            <div class="space-y-4">
+        <div class="space-y-4 sm:space-y-6">
+          <div class="bg-indigo-50 p-3 sm:p-4 rounded-lg">
+            <h3 class="font-semibold text-lg text-indigo-800 mb-2 sm:mb-3">Controls</h3>
+              <div class="space-y-3 sm:space-y-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Number of neighbors (k): 
@@ -67,7 +84,7 @@
               
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Data distribution:</label>
-                <select id="distributionType" class="w-full p-2 border rounded">
+                <select id="distributionType" class="w-full p-1.5 sm:p-2 text-sm sm:text-base border rounded">
                   <option value="separated">Well Separated</option>
                   <option value="overlapping">Overlapping</option>
                   <option value="circles">Concentric</option>
@@ -76,48 +93,46 @@
               
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Feature Scaling:</label>
-                <select id="featureScaling" class="w-full p-2 border rounded">
+                <select id="featureScaling" class="w-full p-1.5 sm:p-2 text-sm sm:text-base border rounded">
                   <option value="none">None</option>
                   <option value="standard">Standardization</option>
                   <option value="minmax">Min-Max Scaling</option>
                 </select>
               </div>
               
-              <div class="pt-2">
-                <button onclick="generateData()" class="btn w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow">
+              <div class="pt-1 sm:pt-2">
+                <button onclick="generateData()" class="btn w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1.5 sm:py-2 px-3 sm:px-4 text-sm sm:text-base rounded-lg shadow">
                   Generate Data
                 </button>
               </div>
               
               <div>
-                <button onclick="classifyPoint()" class="btn w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow">
+                <button onclick="classifyPoint()" class="btn w-full bg-green-600 hover:bg-green-700 text-white font-bold py-1.5 sm:py-2 px-3 sm:px-4 text-sm sm:text-base rounded-lg shadow">
                   Classify New Point
                 </button>
               </div>
               
               <div>
-                <button onclick="classifyMultiplePoints()" class="btn w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg shadow">
+                <button onclick="classifyMultiplePoints()" class="btn w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-1.5 sm:py-2 px-3 sm:px-4 text-sm sm:text-base rounded-lg shadow">
                   Simulate Multiple Tests
                 </button>
               </div>
             </div>
           </div>
           
-          <div class="bg-indigo-50 p-4 rounded-lg">
-            <h3 class="font-semibold text-lg text-indigo-800 mb-2">Results</h3>
-            <div id="resultStats" class="text-center p-2">
-              <div class="text-gray-700">Classification accuracy: <span id="accuracy" class="font-bold text-indigo-700">-</span></div>
-              <div class="text-gray-700 mt-1">Correct/Total: <span id="correctCount" class="font-bold text-indigo-700">-</span></div>
+          <div class="bg-indigo-50 p-3 sm:p-4 rounded-lg">
+            <h3 class="font-semibold text-lg text-indigo-800 mb-1 sm:mb-2">Results</h3>
+            <div id="resultStats" class="text-center p-1 sm:p-2">
+              <div class="text-gray-700 text-sm sm:text-base">Classification accuracy: <span id="accuracy" class="font-bold text-indigo-700">-</span></div>
+              <div class="text-gray-700 text-sm sm:text-base mt-1">Correct/Total: <span id="correctCount" class="font-bold text-indigo-700">-</span></div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="grid md:grid-cols-2 gap-8">
-      <div class="card bg-white p-6 rounded-xl shadow">
-        <h2 class="text-2xl font-semibold text-indigo-700 mb-3">Assignment</h2>
-        <ul class="list-disc pl-6 space-y-1 text-gray-700">
+    </section>    <section class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
+      <div class="card bg-white p-4 sm:p-6 rounded-xl shadow">
+        <h2 class="text-xl sm:text-2xl font-semibold text-indigo-700 mb-2 sm:mb-3">Assignment</h2>
+        <ul class="list-disc pl-5 sm:pl-6 space-y-0.5 sm:space-y-1 text-sm sm:text-base text-gray-700">
           <li>Create a dataset where feature scaling affects classification.</li>
           <li>Compare accuracy of k-NN using original vs engineered features.</li>
           <li>Explore effect of different values of k.</li>
@@ -125,9 +140,9 @@
         </ul>
       </div>
       
-      <div class="card bg-white p-6 rounded-xl shadow">
-        <h2 class="text-2xl font-semibold text-indigo-700 mb-3">References</h2>
-        <ul class="list-disc pl-6 space-y-1 text-gray-700">
+      <div class="card bg-white p-4 sm:p-6 rounded-xl shadow">
+        <h2 class="text-xl sm:text-2xl font-semibold text-indigo-700 mb-2 sm:mb-3">References</h2>
+        <ul class="list-disc pl-5 sm:pl-6 space-y-0.5 sm:space-y-1 text-sm sm:text-base text-gray-700">
           <li>Duda, Hart & Stork - Pattern Classification</li>
           <li>MIT OpenCourseWare - Machine Learning Lectures</li>
           <li>Scikit-learn Documentation - kNN Classification</li>
@@ -136,10 +151,9 @@
     </section>
   </div>
 
-  <footer class="bg-gray-800 text-white py-6 px-6 text-center">
+  <footer class="bg-gray-800 text-white py-4 sm:py-6 px-4 sm:px-6 text-center text-sm sm:text-base">
     <p>© 2025 Virtual Labs</p>
   </footer>
-
   <script>
     let ctx = document.getElementById('featureCanvas').getContext('2d');
     let chart;
@@ -149,6 +163,23 @@
     const colors = ['rgba(239, 68, 68, 0.7)', 'rgba(59, 130, 246, 0.7)'];
     const borderColors = ['rgb(220, 38, 38)', 'rgb(29, 78, 216)'];
     let testResults = { correct: 0, total: 0 };
+
+    // Resize canvas for responsiveness
+    function resizeCanvas() {
+      const canvas = document.getElementById('featureCanvas');
+      const container = canvas.parentElement;
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+      if (chart) {
+        chart.resize();
+      }
+    }
+
+    // Call resize on window resize
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Initial canvas sizing
+    window.addEventListener('load', resizeCanvas);
 
     function updateKValue() {
       const kValue = document.getElementById('kInput').value;
@@ -278,14 +309,13 @@
             pointStyle: 'triangle'
           });
         });
-      }
-
-      if (chart) chart.destroy();
+      }      if (chart) chart.destroy();
       chart = new Chart(ctx, {
         type: 'scatter',
         data: { datasets },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           animation: {
             duration: 1000,
             easing: 'easeOutQuart'
@@ -295,9 +325,11 @@
               labels: {
                 font: {
                   family: 'Poppins',
-                  size: 12
-                }
-              }
+                  size: window.innerWidth < 768 ? 10 : 12
+                },
+                boxWidth: window.innerWidth < 768 ? 8 : 12
+              },
+              position: window.innerWidth < 768 ? 'bottom' : 'top'
             },
             tooltip: {
               callbacks: {
@@ -307,6 +339,9 @@
                   const y = context.parsed.y.toFixed(2);
                   return `${label}: (${x}, ${y})`;
                 }
+              },
+              bodyFont: {
+                size: window.innerWidth < 768 ? 10 : 12
               }
             }
           },
@@ -321,7 +356,12 @@
                 text: 'Feature X',
                 font: {
                   family: 'Poppins',
-                  size: 14
+                  size: window.innerWidth < 768 ? 12 : 14
+                }
+              },
+              ticks: {
+                font: {
+                  size: window.innerWidth < 768 ? 10 : 12
                 }
               }
             },
@@ -333,13 +373,21 @@
                 text: 'Feature Y',
                 font: {
                   family: 'Poppins',
-                  size: 14
+                  size: window.innerWidth < 768 ? 12 : 14
+                }
+              },
+              ticks: {
+                font: {
+                  size: window.innerWidth < 768 ? 10 : 12
                 }
               }
             },
           },
         },
       });
+      
+      // Make sure canvas size is properly set
+      resizeCanvas();
     }
 
     function classifyPoint() {
