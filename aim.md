@@ -1,0 +1,1 @@
+To understand how the representation of an object within a computer influences its classification as a member of a particular class. This experiment involves exploring the concept of feature space, designing custom features, and evaluating classification performance using a Nearest Neighbor approach.
